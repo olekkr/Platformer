@@ -31,7 +31,7 @@ void drawMap(int[] map){
   for(int i= 1; i < map.length; i += 5){
   fill(0);
   rect(map[i],map[i+1],map[i]+map[i+2],map[i+1]+map[i+3]);
-  println("drawing:",map[i-1],map[i],map[i+1],map[i]+map[i+2],map[i+1]+map[i+3]);
+  println("drawing:", map[i-1], map[i], map[i+1], map[i]+map[i+2], map[i+1]+map[i+3]);
   }
 }
 
