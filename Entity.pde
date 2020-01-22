@@ -10,8 +10,8 @@ class Entity {
   boolean weight; //does it move due to gravity?
 
   void move(){ //move in according to vel
-    this.x = this.x + this.speedX
-    this.y = this.y + this.speedY
+    this.x = this.x + this.speedX;
+    this.y = this.y + this.speedY;
   }
   
   void gravMove(){//move according to gravity

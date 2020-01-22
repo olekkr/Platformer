@@ -15,6 +15,10 @@ void draw() {
   //for(int i = 0; i< 4; i++){
   //  print(map[i]);   
   //}
+  //for(int i = 0; i < enteties.length; i++){
+  
+  //}
+  println(entities[0].x);
 }
 
 int[] loadMap(String mapName) {
