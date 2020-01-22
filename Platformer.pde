@@ -1,4 +1,5 @@
 ArrayList<Entity> entities = new ArrayList<Entity>();
+ArrayList<Obsticle> obsticles = new ArrayList<Obsticle>();
 int[] vMap;
 int[] map;
 

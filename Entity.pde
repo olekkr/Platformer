@@ -1,7 +1,7 @@
 class Entity {
   
-  float x;
-  float y;
+  int x;
+  int y;
   int entityWidth;
   int entityHeight;
   Boolean collision;
@@ -10,8 +10,8 @@ class Entity {
   boolean weight; //does it move due to gravity?
 
   void move(){ //move in according to vel
-    this.x = this.x + this.speedX;
-    this.y = this.y + this.speedY;
+    this.x = int(this.x + this.speedX);
+    this.y = int(this.y + this.speedY);
   }
   
   void gravMove(){//move according to gravity
