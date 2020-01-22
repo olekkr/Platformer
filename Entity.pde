@@ -5,6 +5,9 @@ class Entity {
   int entityWidth;
   int entityHeight;
   Boolean collision;
+  int speedX;
+  int speedY;
+  
   
   Entity(){
     this.x = width/2;
