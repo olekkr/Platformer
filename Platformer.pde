@@ -1,10 +1,10 @@
-ArrayList<Entity> enteties = new ArrayList<Entity>();
+ArrayList<Entity> entities = new ArrayList<Entity>();
 int[] vMap;
 int[] map;
 
 void setup() {
   size(1024, 512);
-  enteties.add(new Player());
+  entities.add(new Player());
   
   vMap = loadMap("v1.txt");
   map = loadMap("1.txt");
@@ -32,14 +32,14 @@ void drawMap(int[] map) {
   for (int i= 1; i < map.length; i += 5) {
     fill(0);
     rect(map[i], map[i+1], map[i]+map[i+2], map[i+1]+map[i+3]);
-    println("drawing:", map[i-1], map[i], map[i+1], map[i]+map[i+2], map[i+1]+map[i+3]);
+    //println("drawing:", map[i-1], map[i], map[i+1], map[i]+map[i+2], map[i+1]+map[i+3]);
   }
 }
 
 void entityMove() {
   if (keyPressed) {
     if (key == 'a' || key == 'A'|| key == 'd'|| key == 'D') {
-    ;
+  //  println(entities.get(0).x); does not work rn for some reason
     }
   }
 }
