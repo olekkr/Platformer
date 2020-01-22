@@ -16,7 +16,7 @@ class Entity {
   
   void gravMove(){//move according to gravity
     if(weight){
-      this.speedY += 0.1
+      this.speedY += 0.1;
     }
   }
   
