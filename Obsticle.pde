@@ -5,8 +5,8 @@ class Obsticle{
   int posY2;
   int id; 
   
- Obsticle(int x1, int y1, int x2, int y2){
-  id = int(random(300));
+ Obsticle(int x1, int y1, int x2, int y2,int gameTick){
+  id = int(random(99))+gameTick*1000;
   this.posX1 = x1;
   this.posY1 = y1;
   this.posX2 = x2;

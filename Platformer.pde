@@ -2,6 +2,7 @@ ArrayList<Entity> entities = new ArrayList<Entity>();
 ArrayList<Obsticle> obsticles = new ArrayList<Obsticle>();
 int[] vMap;
 int[] map;
+int gametick = 0;
 
 void setup() {
   size(1024, 512);
@@ -12,6 +13,7 @@ void setup() {
 }
 
 void draw() {
+  gametick += 1;
   drawMap(vMap);
   //for(int i = 0; i< 4; i++){
   //  print(map[i]);   
