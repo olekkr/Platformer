@@ -7,7 +7,7 @@ int gametick = 0;
 void setup() {
   size(1024, 512);
   entities.add(new Player());
-  
+
   vMap = loadMap("v1.txt");
   map = loadMap("1.txt");
 }
@@ -15,6 +15,7 @@ void setup() {
 void draw() {
   gametick += 1;
   drawMap(vMap);
+  entityMove();
   //for(int i = 0; i< 4; i++){
   //  print(map[i]);   
   //}
@@ -40,13 +41,22 @@ void drawMap(int[] map) {
 }
 
 void entityMove() {
-  if (keyPressed) {
-    if (key == 'a' || key == 'A'|| key == 'd'|| key == 'D') {
-  //  println(entities.get(0).x); does not work rn for some reason
-    }
+
+  //println(entities.get(0).x); // does not work rn for some reason
+  for (Entity entity : entities ) {
+    entity.move();
+    entity.gravMove();
   }
 }
 
+void playerAcc() {
+  if (keyPressed) {
+    if (key == 'a' || key == 'A'|| key == 'd'|| key == 'D') {
+    
+    
+    }
+  }
+}
 
 void checkCollisions() {
 }
