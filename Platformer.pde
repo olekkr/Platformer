@@ -4,6 +4,7 @@ int[] vMap;
 int[] map;
 int gametick = 0;
 
+
 void setup() {
   size(1024, 512);
   entities.add(new Player());
@@ -29,6 +30,9 @@ int[] loadMap(String mapName) {
     map[i] = (int(lines[i]));
   }
   return map;
+}
+void renderALL(){
+  
 }
 
 void drawMap(int[] map) {

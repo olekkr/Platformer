@@ -4,13 +4,15 @@ class Obstacle{
   int posX2;
   int posY2;
   int id; 
+  int[] colorRGB = new int[3];
   
- Obstacle(int x1, int y1, int x2, int y2,int gameTick){
+ Obstacle(int x1, int y1, int x2, int y2,int gameTick, int[] colorRGB){
   id = int(random(99))+gameTick*1000;
   this.posX1 = x1;
   this.posY1 = y1;
   this.posX2 = x2;
   this.posY2 = y2;
+this.colorRGB = colorRGB;
  }
  
  boolean testCollision(int x, int y){
@@ -19,5 +21,9 @@ class Obstacle{
    return true;
    }
    return false;
+ }
+ 
+ void render(){
+   
  }
 }
