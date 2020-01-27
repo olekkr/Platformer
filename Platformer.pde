@@ -1,5 +1,5 @@
 ArrayList<Entity> entities = new ArrayList<Entity>();
-ArrayList<Obsticle> obsticles = new ArrayList<Obsticle>();
+ArrayList<Obstacle> Obstacles = new ArrayList<Obstacle>();
 int[] vMap;
 int[] map;
 int gametick = 0;
