@@ -1,6 +1,6 @@
   class Player extends Entity {
   float accMove;
-  float accMultiplier;
+  float accMultiplier = 1.25;
   
   
   

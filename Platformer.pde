@@ -17,7 +17,8 @@ void draw() {
   gametick += 1;
   drawMap(vMap);
   entityMove();
-  //for(int i = 0; i< 4; i++){
+  playerAcc();
+  //for(int ai = 0; i< 4; i++){
   //  print(map[i]);   
   //}
 }
@@ -33,7 +34,7 @@ void drawMap(int[] map) {
   }
 }
 
-void entityMove() {
+void entityMove() { // Moves any Entity
 
   //println(entities.get(0).x); // does not work rn for some reason
   for (Entity entity : entities ) {
@@ -42,9 +43,16 @@ void entityMove() {
   }
 }
 
-void playerAcc(Player player) {
+void playerAcc() { // Moves Player based on Accerelation and keyboard inputs
   if (keyPressed) {
     if (key == 'a' || key == 'A'|| key == 'd'|| key == 'D') {
+
+    //  println(((Player) entities.get(0)).accMove);
+      
+      // While forcing Playertype makes accMove equal to speedX * accMultiplier
+      ((Player) entities.get(0)).accMove = entities.get(0).speedX * ((Player) entities.get(0)).accMultiplier;
+
+     // println(((Player) entities.get(0)).accMove);
     }
   }
 }
