@@ -34,7 +34,7 @@ void drawMap(ArrayList<int[]> map) {
   }
 }
 
-void entityMove() {
+void entityMove() { // Moves any Entity
 
   //println(entities.get(0).x); // does not work rn for some reason
   for (Entity entity : entities ) {
