@@ -8,34 +8,31 @@ void setup() {
   entities.add(new Player());
   obstacles = loadMap("1.txt");
   strokeWeight(0);
+  stroke(0);
+  frameRate(30);
 }
 
 void draw() {
   gametick += 1;
   background(255);
-  drawMap(obstacles);
-  entityMove();
   renderALL();
+  entityMove();
 }
 
 void renderALL() {
-  for(Entity entity : entities){
+  for (Obstacle obstacle : obstacles) {
+    obstacle.render();
+  }
+  for (Entity entity : entities) {
     entity.render();
     entity.debug();
   }
 }
 
-void drawMap(ArrayList<Obstacle> obstacles) {
-  for (Obstacle obstacle : obstacles) {
-  obstacle.render();
-  }
-  println("finished drawing obsticles");
-}
-
 void entityMove() { // Moves any Entity
   //println(entities.get(0).x); // does not work rn for some reason
   for (Entity entity : entities ) {
-    entity.move();
+    entity.move(obstacles);
     entity.gravMove();
   }
 }
@@ -50,11 +47,12 @@ void playerAcc(Player player) {// Moves Player based on Accerelation and keyboar
       ((Player) entities.get(0)).accMove = entities.get(0).speedX * ((Player) entities.get(0)).accMultiplier;
 
       // println(((Player) entities.get(0)).accMove);
+      
     }
   }
 }
 
-void checkCollisions() {
+void checkCollision() {
 }
 
 ArrayList loadMap(String path) {
@@ -69,14 +67,40 @@ ArrayList loadMap(String path) {
     String outputStr = "";
     for (int i = 0; i < str.length(); i++) {
       char curr = str.charAt(i);
-      if (curr == '#') {
+      if (curr == '\"') {
         comment = !comment;
         continue;
       }
       if (comment) {
         continue;
       }
-      if (curr == ',' || curr == '1' || curr == '2' || curr == '3' || curr == '4' || curr == '5' || curr == '6' || curr == '7' || curr == '8' || curr == '9' || curr == '0') {
+      if (
+        curr == 'a' ||
+        curr == 'b' ||
+        curr == 'c' ||
+        curr == 'd' ||
+        curr == 'b' ||
+        curr == 'e' ||
+        curr == 'f' ||
+        curr == 'A' ||
+        curr == 'B' ||
+        curr == 'C' ||
+        curr == 'D' ||
+        curr == 'E' ||
+        curr == 'F' ||
+        curr == 'f' ||
+        curr == ',' ||
+        curr == '1' ||
+        curr == '2' ||
+        curr == '3' ||
+        curr == '4' ||
+        curr == '5' ||
+        curr == '6' ||
+        curr == '7' ||
+        curr == '8' ||
+        curr == '9' ||
+        curr == '0'
+        ) {
         outputStr += curr;
       }
     }
@@ -86,18 +110,17 @@ ArrayList loadMap(String path) {
 
   //str => int
   for (String strLine : strLines) {
-    String[] numberStrs = split(strLine, ',');
-    int[] tmpInt = {};
-    for (String numberStr : numberStrs) {
+    String[] numberStr = split(strLine, ',');
 
-      tmpInt = append(tmpInt, int(numberStr));
-    }
-    if (tmpInt.length >= 7) {
-      obstacles.add(new Obstacle(tmpInt[0], tmpInt[1], tmpInt[2], tmpInt[3], tmpInt[4], tmpInt[5], tmpInt[6]));
-      println("ld map", tmpInt.length, tmpInt[4], tmpInt[5], tmpInt[6]);
-    } else if (tmpInt.length >= 3) {
-      obstacles.add(new Obstacle(tmpInt[0], tmpInt[1], tmpInt[2], tmpInt[3]));
-      println("ld map", tmpInt.length, 255, 255, 255);
+    if (numberStr.length >= 7) { //x1, y1, x2, y2, r, g, b 
+      obstacles.add(new Obstacle(int(numberStr[0]), int(numberStr[1]), int(numberStr[2]), int(numberStr[3]), int(numberStr[4]), int(numberStr[5]), int(numberStr[6])));
+      println("ld map RGBmode", numberStr.length, numberStr[4], numberStr[5], numberStr[6]);
+    } else if (numberStr.length == 5) {//x1, y1, x2, y2, #rgb4 (hex)
+      obstacles.add(new Obstacle(int(numberStr[0]), int(numberStr[1]), int(numberStr[2]), int(numberStr[3]), unhex(numberStr[4])));
+      println("ld map hexmode", numberStr.length );
+    } else if (numberStr.length >= 3) {//x1, y1, x2, y2
+      obstacles.add(new Obstacle(int(numberStr[0]), int(numberStr[1]), int(numberStr[2]), int(numberStr[3])));
+      println("ld map posmode", numberStr.length, 255, 255, 255);
     }
   }
   println("done converting str[] => Obstacle[]");

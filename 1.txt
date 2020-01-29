@@ -1,4 +1,6 @@
-#comments# only numbers and commas are interpetered
-#coor1, coor2, coor3, coor4, *RED, *GREEN, *BLUE#
-0,500,520,-100,255,255,255
-10, 480, 1000, 500, 255, 0, 0
+"comments1234567890AaBbCcDdEeFf" only numbers"," commas"," "a-f" and "A-F" are interpetered when uncommented
+"coor1, coor2, coor3, coor4, *RED, *GREEN, *BLUE"
+
+10, 480, 1000, 500, #F0A0F010
+"0, 20, 400, 10
+0, 0, 30, 512, #A000FF00
