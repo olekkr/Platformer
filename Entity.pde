@@ -9,6 +9,9 @@ class Entity {
   float speedY;
   boolean weight; //does it move due to gravity?
   int[] COLOR = {0,0,255};
+  int RED = 0;
+  int GREEN = 0;
+  int BLUE = 255;
   
   Entity() {
     this.x = width/2;
@@ -26,12 +29,12 @@ class Entity {
 
   void gravMove() {//move according to gravity
     if (weight) {
-      this.speedY += 0.2;
+      this.speedY += 0.19;
     }
   }
   
   void render(){
-    fill(COLOR[0], COLOR[1], COLOR[2]);
+    fill(RED, GREEN, BLUE);
     rect(x, y, x + this.entityWidth/1, y + this.entityHeight/1);
   }
 
