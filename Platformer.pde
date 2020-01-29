@@ -1,24 +1,21 @@
 ArrayList<Entity> entities = new ArrayList<Entity>();
 ArrayList<Obstacle> Obstacles = new ArrayList<Obstacle>();
-int[] vMap;
-int[] map;
+ArrayList<int[]> map;
 int gametick = 0;
 
 
 void setup() {
   size(1024, 512);
   entities.add(new Player());
-
-  vMap = loadMap("v1.txt");
   map = loadMap("1.txt");
+  strokeWeight(0);
 }
 
 void draw() {
   gametick += 1;
-  drawMap(vMap);
+  drawMap(map);
   entityMove();
-  playerAcc();
-  //for(int ai = 0; i< 4; i++){
+  //for(int i = 0; i< 4; i++){
   //  print(map[i]);   
   //}
 }
@@ -26,15 +23,18 @@ void draw() {
 void renderALL() {
 }
 
-void drawMap(int[] map) {
-  for (int i= 1; i < map.length; i += 5) {
+void drawMap(ArrayList<int[]> map) {
+  for (int[] coors : map) {
     fill(0);
-    rect(map[i], map[i+1], map[i]+map[i+2], map[i+1]+map[i+3]);
+    if(coors.length == 7){ //sets color if specified
+      fill(coors[4], coors[5], coors[6]);
+    }
+    rect(coors[0], coors[1], coors[2], coors[3]);
     //println("drawing:", map[i-1], map[i], map[i+1], map[i]+map[i+2], map[i+1]+map[i+3]);
   }
 }
 
-void entityMove() { // Moves any Entity
+void entityMove() {
 
   //println(entities.get(0).x); // does not work rn for some reason
   for (Entity entity : entities ) {
@@ -43,10 +43,10 @@ void entityMove() { // Moves any Entity
   }
 }
 
-void playerAcc() { // Moves Player based on Accerelation and keyboard inputs
+void playerAcc(Player player) {// Moves Player based on Accerelation and keyboard inputs
   if (keyPressed) {
     if (key == 'a' || key == 'A'|| key == 'd'|| key == 'D') {
-
+      
     //  println(((Player) entities.get(0)).accMove);
       
       // While forcing Playertype makes accMove equal to speedX * accMultiplier
@@ -85,16 +85,22 @@ ArrayList loadMap(String path) {
     }
     strLines = append(strLines, outputStr);
   }
+  println("done interpeting");
 
   //str => int
   for (String strLine : strLines) {
     String[] numberStrs = split(strLine, ',');
     int[] tmpInt = {};
     for (String numberStr : numberStrs) {
+      
       tmpInt = append(tmpInt, int(numberStr));
     }
-    intLines.add(tmpInt);
+    if(tmpInt.length > 3){
+       map.add(tmpInt);
+       println("ld map",tmpInt.length, tmpInt[0]);
+    }
   }
+  println("done converting");
 
   return map;
 }
