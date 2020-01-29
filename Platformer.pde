@@ -35,7 +35,6 @@ void drawMap(ArrayList<int[]> map) {
 }
 
 void entityMove() { // Moves any Entity
-
   //println(entities.get(0).x); // does not work rn for some reason
   for (Entity entity : entities ) {
     entity.move();
@@ -63,7 +62,7 @@ void checkCollisions() {
 ArrayList loadMap(String path) {
   String[] lines = loadStrings(path);
   String[] strLines = {};
-  ArrayList<int[]> map = new ArrayList<int[]>();
+  ArrayList<Obstacle> map = new ArrayList<Obstacle>();
   Boolean comment;
 
   //interpeter
@@ -95,12 +94,16 @@ ArrayList loadMap(String path) {
       
       tmpInt = append(tmpInt, int(numberStr));
     }
-    if(tmpInt.length > 3){
-       map.add(tmpInt);
+    if(tmpInt.length >= 7){
+       map.add(new Obstacle(tmpInt[0],tmpInt[1],tmpInt[2], tmpInt[3], tmpInt[4], tmpInt[5], tmpInt[6]));
        println("ld map",tmpInt.length, tmpInt[4], tmpInt[5], tmpInt[6]);
     }
+    else if(tmpInt.length >= 3){
+      map.add(new Obstacle(tmpInt[0],tmpInt[1],tmpInt[2], tmpInt[3]));
+      println("ld map",tmpInt.length, tmpInt[4], tmpInt[5], tmpInt[6]);
+    }
   }
-  println("done converting str[] => int[]");
+  println("done converting str[] => Obstacle[]");
 
   return map;
 }

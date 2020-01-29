@@ -4,15 +4,24 @@ class Obstacle{
   int posX2;
   int posY2;
   int id; 
-  int[] colorRGB = new int[3];
+  int RED, GREEN, BLUE;
   
- Obstacle(int x1, int y1, int x2, int y2,int gameTick, int[] colorRGB){
-  id = int(random(99))+gameTick*1000;
+ Obstacle(int x1, int y1, int x2, int y2, int RED, int GREEN, int BLUE){
+  id = int(random(999))+millis()*1000;
   this.posX1 = x1;
   this.posY1 = y1;
   this.posX2 = x2;
   this.posY2 = y2;
-this.colorRGB = colorRGB;
+  this.RED = RED;
+  this.GREEN = GREEN;
+  this.BLUE = BLUE;
+ }
+ Obstacle(int x1, int y1, int x2, int y2){
+  id = int(random(999))+millis()*1000;
+  this.posX1 = x1;
+  this.posY1 = y1;
+  this.posX2 = x2;
+  this.posY2 = y2;
  }
  
  boolean testCollision(int x, int y){
@@ -24,7 +33,7 @@ this.colorRGB = colorRGB;
  }
  
  void render(){
-   fill(colorRGB[0], colorRGB[1], colorRGB[2]);
+   fill(this.RED, this.GREEN, this.BLUE);
    rect(this.posX1/1,this.posY1/1,this.posX2/1,this.posY2/1);
  }
 }
