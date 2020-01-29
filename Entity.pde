@@ -10,6 +10,15 @@ class Entity {
   boolean weight; //does it move due to gravity?
   int[] COLOR = {0,0,255};
   
+  Entity() {
+    this.x = width/2;
+    this.y = height/2;
+    this.entityWidth = width/64;
+    this.entityHeight = height/64;
+    this.collision = false;
+    this.weight = true;
+  }
+  
   void move() { //move in according to vel
     this.x = int(this.x + this.speedX);
     this.y = int(this.y + this.speedY);
@@ -26,13 +35,8 @@ class Entity {
     rect(x, y, x + this.entityWidth/1, y + this.entityHeight/1);
   }
 
-
-  Entity() {
-    this.x = width/2;
-    this.y = height/2;
-    this.entityWidth = width/64;
-    this.entityHeight = height/64;
-    this.collision = false;
-    this.weight = true;
-  }
+  void debug(){}
+  
+  
+  
 }

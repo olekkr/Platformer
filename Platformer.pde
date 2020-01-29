@@ -1,19 +1,18 @@
 ArrayList<Entity> entities = new ArrayList<Entity>();
-ArrayList<Obstacle> Obstacles = new ArrayList<Obstacle>();
-ArrayList<int[]> map;
+ArrayList<Obstacle> obstacles = new ArrayList<Obstacle>();
 int gametick = 0;
 
 
 void setup() {
   size(1024, 512);
   entities.add(new Player());
-  map = loadMap("1.txt");
+  obstacles = loadMap("1.txt");
   strokeWeight(0);
 }
 
 void draw() {
   gametick += 1;
-  drawMap(map);
+  drawMap(obstacles);
   entityMove();
   //for(int i = 0; i< 4; i++){
   //  print(map[i]);   
@@ -23,15 +22,11 @@ void draw() {
 void renderALL() {
 }
 
-void drawMap(ArrayList<int[]> map) {
-  for (int[] coors : map) {
-    fill(0);
-    if(coors.length > 6){ //sets color if specified
-      fill(coors[4], coors[5], coors[6]);
-    }
-    rect(coors[0], coors[1], coors[2], coors[3]);
-    //println("drawing:", map[i-1], map[i], map[i+1], map[i]+map[i+2], map[i+1]+map[i+3]);
+void drawMap(ArrayList<Obstacle> obstacles) {
+  for (Obstacle obstacle : obstacles) {
+  obstacle.render();
   }
+  println("finished drawing obsticles");
 }
 
 void entityMove() { // Moves any Entity
@@ -45,13 +40,13 @@ void entityMove() { // Moves any Entity
 void playerAcc(Player player) {// Moves Player based on Accerelation and keyboard inputs
   if (keyPressed) {
     if (key == 'a' || key == 'A'|| key == 'd'|| key == 'D') {
-      
-    //  println(((Player) entities.get(0)).accMove);
-      
+
+      //  println(((Player) entities.get(0)).accMove);
+
       // While forcing Playertype makes accMove equal to speedX * accMultiplier
       ((Player) entities.get(0)).accMove = entities.get(0).speedX * ((Player) entities.get(0)).accMultiplier;
 
-     // println(((Player) entities.get(0)).accMove);
+      // println(((Player) entities.get(0)).accMove);
     }
   }
 }
@@ -62,7 +57,7 @@ void checkCollisions() {
 ArrayList loadMap(String path) {
   String[] lines = loadStrings(path);
   String[] strLines = {};
-  ArrayList<Obstacle> map = new ArrayList<Obstacle>();
+  ArrayList<Obstacle> obstacles = new ArrayList<Obstacle>();
   Boolean comment;
 
   //interpeter
@@ -91,19 +86,18 @@ ArrayList loadMap(String path) {
     String[] numberStrs = split(strLine, ',');
     int[] tmpInt = {};
     for (String numberStr : numberStrs) {
-      
+
       tmpInt = append(tmpInt, int(numberStr));
     }
-    if(tmpInt.length >= 7){
-       map.add(new Obstacle(tmpInt[0],tmpInt[1],tmpInt[2], tmpInt[3], tmpInt[4], tmpInt[5], tmpInt[6]));
-       println("ld map",tmpInt.length, tmpInt[4], tmpInt[5], tmpInt[6]);
-    }
-    else if(tmpInt.length >= 3){
-      map.add(new Obstacle(tmpInt[0],tmpInt[1],tmpInt[2], tmpInt[3]));
-      println("ld map",tmpInt.length, tmpInt[4], tmpInt[5], tmpInt[6]);
+    if (tmpInt.length >= 7) {
+      obstacles.add(new Obstacle(tmpInt[0], tmpInt[1], tmpInt[2], tmpInt[3], tmpInt[4], tmpInt[5], tmpInt[6]));
+      println("ld map", tmpInt.length, tmpInt[4], tmpInt[5], tmpInt[6]);
+    } else if (tmpInt.length >= 3) {
+      obstacles.add(new Obstacle(tmpInt[0], tmpInt[1], tmpInt[2], tmpInt[3]));
+      println("ld map", tmpInt.length, 255, 255, 255);
     }
   }
   println("done converting str[] => Obstacle[]");
 
-  return map;
+  return obstacles;
 }
