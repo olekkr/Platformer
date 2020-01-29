@@ -12,14 +12,17 @@ void setup() {
 
 void draw() {
   gametick += 1;
+  background(255);
   drawMap(obstacles);
   entityMove();
-  //for(int i = 0; i< 4; i++){
-  //  print(map[i]);   
-  //}
+  renderALL();
 }
 
 void renderALL() {
+  for(Entity entity : entities){
+    entity.render();
+    entity.debug();
+  }
 }
 
 void drawMap(ArrayList<Obstacle> obstacles) {
