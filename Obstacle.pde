@@ -24,6 +24,7 @@ this.colorRGB = colorRGB;
  }
  
  void render(){
-   
+   fill(colorRGB[0], colorRGB[1], colorRGB[2]);
+   rect(this.posX1/1,this.posY1/1,this.posX2/1,this.posY2/1);
  }
 }

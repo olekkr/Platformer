@@ -1,1 +1,3 @@
-0,500,520,-100
+#comments#
+#coor1, coor2, coor3, coor4, *RED, *GREEN, *BLUE#
+0,500,520,-100,255,255,255

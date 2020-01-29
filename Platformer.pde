@@ -22,18 +22,7 @@ void draw() {
   //}
 }
 
-int[] loadMap(String mapName) {
-  String[] linesLS = loadStrings(mapName);
-  String liness = linesLS[0];
-  String[] lines = liness.split(",");
-  int[] map = new int[lines.length];
-  for (int i = 0; i < lines.length; i++) {
-    map[i] = (int(lines[i]));
-  }
-  return map;
-}
-void renderALL(){
-  
+void renderALL() {
 }
 
 void drawMap(int[] map) {
@@ -53,14 +42,51 @@ void entityMove() {
   }
 }
 
-void playerAcc() {
+void playerAcc(Player player) {
   if (keyPressed) {
     if (key == 'a' || key == 'A'|| key == 'd'|| key == 'D') {
-    
-    
     }
   }
 }
 
 void checkCollisions() {
+}
+
+ArrayList loadMap(String path) {
+  String[] lines = loadStrings(path);
+  String[] strLines = {};
+  ArrayList<int[]> map = new ArrayList<int[]>();
+  Boolean comment;
+
+  //interpeter
+  for (String str : lines) {
+    comment = false;
+    String outputStr = "";
+    for (int i = 0; i < str.length(); i++) {
+      char curr = str.charAt(i);
+      if (curr == '#') {
+        comment = !comment;
+        continue;
+      }
+      if (comment) {
+        continue;
+      }
+      if (curr == ',' || curr == '1' || curr == '2' || curr == '3' || curr == '4' || curr == '5' || curr == '6' || curr == '7' || curr == '8' || curr == '9' || curr == '0') {
+        outputStr += curr;
+      }
+    }
+    strLines = append(strLines, outputStr);
+  }
+
+  //str => int
+  for (String strLine : strLines) {
+    String[] numberStrs = split(strLine, ',');
+    int[] tmpInt = {};
+    for (String numberStr : numberStrs) {
+      tmpInt = append(tmpInt, int(numberStr));
+    }
+    intLines.add(tmpInt);
+  }
+
+  return map;
 }
