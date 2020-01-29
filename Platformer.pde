@@ -26,7 +26,7 @@ void renderALL() {
 void drawMap(ArrayList<int[]> map) {
   for (int[] coors : map) {
     fill(0);
-    if(coors.length == 7){ //sets color if specified
+    if(coors.length > 6){ //sets color if specified
       fill(coors[4], coors[5], coors[6]);
     }
     rect(coors[0], coors[1], coors[2], coors[3]);
@@ -97,10 +97,10 @@ ArrayList loadMap(String path) {
     }
     if(tmpInt.length > 3){
        map.add(tmpInt);
-       println("ld map",tmpInt.length, tmpInt[0]);
+       println("ld map",tmpInt.length, tmpInt[4], tmpInt[5], tmpInt[6]);
     }
   }
-  println("done converting");
+  println("done converting str[] => int[]");
 
   return map;
 }

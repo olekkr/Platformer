@@ -1,3 +1,4 @@
-#comments#
+#comments# only numbers and commas are interpetered
 #coor1, coor2, coor3, coor4, *RED, *GREEN, *BLUE#
 0,500,520,-100,255,255,255
+10, 480, 1000, 500, 255, 0, 0
