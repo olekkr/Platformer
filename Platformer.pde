@@ -16,8 +16,7 @@ void draw() {
   background(255);
   renderALL();
   entityMove();
-  
-  
+  playerAcc();
 }
 
 void renderALL() {
@@ -38,20 +37,24 @@ void entityMove() { // Moves any Entity
   }
 }
 
-void playerAcc(Player player) {// Moves Player based on Accerelation and keyboard inputs
+void playerAcc() {// Moves Player based on Accerelation and keyboard inputs
   if (keyPressed) {
     //Brug "switch" meget nemmere 
     // https://processing.org/reference/switch.html
     if (key == 'a' || key == 'A'|| key == 'd'|| key == 'D') {
 
-      //  println(((Player) entities.get(0)).accMove);
+      // While forcing Playertype makes accMove equal to accMove * accMultiplier
+      ((Player) entities.get(0)).accMove = abs(((Player) entities.get(0)).accMove) * ((Player) entities.get(0)).accMultiplier;
 
-      // While forcing Playertype makes accMove equal to speedX * accMultiplier
-      ((Player) entities.get(0)).accMove = entities.get(0).speedX * ((Player) entities.get(0)).accMultiplier;
-
-      // println(((Player) entities.get(0)).accMove);
-      
+      if (key == 'a' || key == 'A') { // move left
+        ((Player) entities.get(0)).x = Math.round(((Player) entities.get(0)).x - ((Player) entities.get(0)).accMove) ;
+      }
+      if (key == 'd' || key == 'D') { // move right
+        ((Player) entities.get(0)).x = Math.round(((Player) entities.get(0)).x + ((Player) entities.get(0)).accMove) ;
+      }
     }
+  } else { // 
+    ((Player) entities.get(0)).accMove = ((Player) entities.get(0)).accMoveDefault;
   }
 }
 
@@ -68,7 +71,7 @@ ArrayList loadMap(String path) {
   ArrayList<Obstacle> obstacles = new ArrayList<Obstacle>();
   Boolean comment;
 
-  //interpeter
+  //interpreter
   for (String str : lines) {
     comment = false;
     String outputStr = "";
