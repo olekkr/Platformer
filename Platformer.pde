@@ -8,7 +8,7 @@ void setup() {
   entities.add(new Player());
   obstacles = loadMap("1.txt");
   strokeWeight(0);
-  frameRate(10);
+  frameRate(60);
 }
 
 void draw() {
@@ -22,7 +22,7 @@ void draw() {
 void renderALL() {
   for (Obstacle obstacle : obstacles) {
     obstacle.render();
-    }
+  }
   for (Entity entity : entities) {
     entity.render();
     entity.debug();
@@ -39,12 +39,15 @@ void entityMove() { // Moves any Entity
 
 void playerAcc() {// Moves Player based on Accerelation and keyboard inputs
   if (keyPressed) {
-    //Brug "switch" meget nemmere 
-    // https://processing.org/reference/switch.html
     if (key == 'a' || key == 'A'|| key == 'd'|| key == 'D') {
 
-      // While forcing Playertype makes accMove equal to accMove * accMultiplier
-      ((Player) entities.get(0)).accMove = abs(((Player) entities.get(0)).accMove) * ((Player) entities.get(0)).accMultiplier;
+      // While forcing Playertype makes accMove equal to accMove * accMultiplier and implements MaxMoveMax
+
+      if (abs((((Player) entities.get(0)).accMove * ((Player) entities.get(0)).accMultiplier)) > ((Player) entities.get(0)).accMoveMax) {
+        ((Player) entities.get(0)).accMove = ((Player) entities.get(0)).accMoveMax;
+      } else {
+        ((Player) entities.get(0)).accMove = abs(((Player) entities.get(0)).accMove * ((Player) entities.get(0)).accMultiplier);
+      }
 
       if (key == 'a' || key == 'A') { // move left
         ((Player) entities.get(0)).x = Math.round(((Player) entities.get(0)).x - ((Player) entities.get(0)).accMove) ;
@@ -52,18 +55,20 @@ void playerAcc() {// Moves Player based on Accerelation and keyboard inputs
       if (key == 'd' || key == 'D') { // move right
         ((Player) entities.get(0)).x = Math.round(((Player) entities.get(0)).x + ((Player) entities.get(0)).accMove) ;
       }
-    }
+    } 
+    println(((Player) entities.get(0)).accMove);
   } else { // 
     ((Player) entities.get(0)).accMove = ((Player) entities.get(0)).accMoveDefault;
+    println(((Player) entities.get(0)).accMove);
   }
 }
 
 boolean testPInBox(float px, float py, int bx, int by, int bw, int bh) { // tests if a point is in a box
-    if ((px > bx && px < bx + bw) && (py > by && py < by + bh)) {
-      return true;
-    }
-    return false;
+  if ((px > bx && px < bx + bw) && (py > by && py < by + bh)) {
+    return true;
   }
+  return false;
+}
 
 ArrayList loadMap(String path) {
   String[] lines = loadStrings(path);
