@@ -48,11 +48,11 @@ class Entity {
   }
 
   void debug() {
-    println("x:", this.x, "y:", this.y, 
-    "entityWidth;", this.entityWidth, "entityHeight:", this.entityHeight, 
-    "collision:", this.collision, "weight:", this.weight, 
-    "speedXY:", this.speedX, this.speedY, gametick,
-    "id:", this.id);
+  //  println("x:", this.x, "y:", this.y, 
+  //  "entityWidth;", this.entityWidth, "entityHeight:", this.entityHeight, 
+  //  "collision:", this.collision, "weight:", this.weight, 
+  //  "speedXY:", this.speedX, this.speedY, gametick,
+  //  "id:", this.id);
   }
 
   boolean testCollision(Obstacle obstacle) {
