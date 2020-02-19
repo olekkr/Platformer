@@ -1,49 +1,42 @@
 class Obstacle{
-  int posX1;
-  int posY1;
-  int posX2;
-  int posY2;
+  int x;
+  int y;
+  int width_;
+  int height_;
   int id; 
   color COLOR;
+  float bounceX = 1.00;
+  float bounceY = 0.00;
   
- Obstacle(int x1, int y1, int x2, int y2, int RED, int GREEN, int BLUE){//RGB mode
+ Obstacle(int x, int y, int width_, int height_, int RED, int GREEN, int BLUE){//RGB mode
   id = int(random(999))+millis()*1000;
-  this.posX1 = x1;
-  this.posY1 = y1;
-  this.posX2 = x2;
-  this.posY2 = y2;
+  this.x = x;
+  this.y = y;
+  this.width_ = width_;
+  this.height_ = height_;
   this.COLOR = unhex("FF" + str(RED) + str(GREEN) + str(BLUE));
   println("obstacle color", hex(this.COLOR));
  }
- Obstacle(int x1, int y1, int x2, int y2){
+ Obstacle(int x, int y, int width_, int height_){
   id = int(random(999))+millis()*1000;//posmode
-  this.posX1 = x1;
-  this.posY1 = y1;
-  this.posX2 = x2;
-  this.posY2 = y2;
+  this.x = x;
+  this.y = y;
+  this.width_ = width_;
+  this.height_ = height_;
   this.COLOR = #FF00FF;
   println("obstacle color", hex(this.COLOR));
  }
- Obstacle(int x1, int y1, int x2, int y2, color COLOR){//hexmode
+ Obstacle(int x, int y, int width_, int height_, color COLOR){//hexmode
    id = int(random(999))+millis()*1000;
-  this.posX1 = x1;
-  this.posY1 = y1;
-  this.posX2 = x2;
-  this.posY2 = y2;
+  this.x = x;
+  this.y = y;
+  this.width_ = width_;
+  this.height_ = height_;
   this.COLOR = COLOR;
   println("obstacle color", hex(this.COLOR));
  }
- 
- boolean testCollision(int x, int y){
-   if(((x < this.posX2 && x > this.posX1) || (x > this.posX2 && x < this.posX1)) && ((y < this.posY2 && y > this.posY1) || (y > this.posY2 && y < this.posY1))){
-   print("collided");
-   return true;
-   }
-   return false;
- }
- 
  void render(){
    fill(COLOR);
-   rect(this.posX1/1,this.posY1/1,this.posX2/1,this.posY2/1);
+   rect(this.x/1,this.y/1,this.x+this.width_/1,this.y + this.height_/1);
  }
 }

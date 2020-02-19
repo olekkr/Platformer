@@ -1,6 +1,6 @@
-"comments1234567890AaBbCcDdEeFf" only numbers"," commas"," "a-f" and "A-F" are interpetered when uncommented
-"coor1, coor2, coor3, coor4, *RED, *GREEN, *BLUE"
+"comments1234567890AaBbCcDdEeFf" only numbers"," commas"," "a-f" & "A-F" are interpetered when uncommented
+"coor1, coor2, coor3, coor4, *RED, *GREEN, *BLUE" "or use hex: ff 00 00 00"
 
-10, 480, 1000, 500, #F0A0F010
+10, 480, 1000, 500, #FFA0F010
 "0, 20, 400, 10
-0, 0, 30, 512, #A000FF00
+0, 0, 30, 512, #FFA070A0

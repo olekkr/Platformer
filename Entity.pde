@@ -1,40 +1,35 @@
 class Entity {
 
-  int x;
-  int y;
+  float x;
+  float y;
   int entityWidth = 20;
   int entityHeight = 50;
-  Boolean collision;
-  float speedX = -5;
-  float speedY = -5;
+  Boolean collidable;
+  float speedX = -15;
+  float speedY = -10;
   boolean weight; //does it move due to gravity?
   color COLOR = unhex("a0AA0000");
   boolean onTheGround = false;
   int id = int(random(99))+100*gametick;
-  
+
   Entity() {
-    this.x = width/2-entityWidth/2+400;
-    this.y = height/2;
-    this.entityWidth = 64;
-    this.entityHeight = 50;
-    this.collision = false;
-    this.weight = true;
   }
 
   void move(ArrayList<Obstacle> obstacles) { //move according to vel
-    if (this.collision) {
+    if (this.collidable) {
     }
-    this.x = int(this.x + this.speedX);
-    this.y = int(this.y + this.speedY);
+    //this.x = this.x + this.speedX;
+    //this.y = this.y + this.speedY;
+    xMove();
   }
 
   void gravMove() {//move according to gravity
     if (this.weight) {
       if (onTheGround) {
-        this.speedY = 0; 
+        this.speedY = 0;
       }
       {
-        this.speedY += 0.19;
+        this.speedY += gravConstant;
       }
     }
   }
@@ -49,24 +44,28 @@ class Entity {
 
   void debug() {
     println("x:", this.x, "y:", this.y, 
-    "entityWidth;", this.entityWidth, "entityHeight:", this.entityHeight, 
-    "collision:", this.collision, "weight:", this.weight, 
-    "speedXY:", this.speedX, this.speedY, gametick,
-    "id:", this.id);
+      "entityWidth;", this.entityWidth, "entityHeight:", this.entityHeight, 
+      "collidable:", this.collidable, "weight:", this.weight, 
+      "speedXY:", this.speedX, this.speedY, gametick, 
+      "id:", this.id);
   }
 
-  boolean testCollision(Obstacle obstacle) {
-    if (this.collision) { 
-      if (
-        obstacle.testCollision(this.x + int(speedX), this.y + int(speedY)) || 
-        obstacle.testCollision(this.x + int(speedX), this.y + this.entityHeight + int(speedY)) || 
-        obstacle.testCollision(this.x + this.entityWidth + int(speedX), this.y + int(speedY)) || 
-        obstacle.testCollision(this.x + this.entityWidth + int(speedX), this.y - this.entityHeight + int(speedY)) 
-        ) {
-        println("collided__________________________________________________");
-        return true;
+  void xMove() {
+    if (this.collidable) { 
+      float specX = this.x + this.speedX; //speculative x pos
+      if (this.speedX < 0) {
+        for(Obstacle obstacle : obstacles){
+          if (testPInBox(specX, this.y, obstacle.x, obstacle.y, obstacle.width_, obstacle.height_)) {
+            println("collided!");
+            this.speedX = this.speedX * obstacle.bounceX * -1;
+            specX = obstacle.x + obstacle.width_;
+          }
+          
+          
+          this.x = specX;
+        }
+        
       }
     }
-    return false;
   }
 }

@@ -1,15 +1,14 @@
 ArrayList<Entity> entities = new ArrayList<Entity>();
 ArrayList<Obstacle> obstacles = new ArrayList<Obstacle>();
 int gametick = 0;
-
+float gravConstant = 0.0;
 
 void setup() {
   size(1024, 512);
   entities.add(new Player());
   obstacles = loadMap("1.txt");
   strokeWeight(0);
-  stroke(0);
-  frameRate(30);
+  frameRate(10);
 }
 
 void draw() {
@@ -17,12 +16,14 @@ void draw() {
   background(255);
   renderALL();
   entityMove();
+  
+  
 }
 
 void renderALL() {
   for (Obstacle obstacle : obstacles) {
     obstacle.render();
-  }
+    }
   for (Entity entity : entities) {
     entity.render();
     entity.debug();
@@ -39,6 +40,8 @@ void entityMove() { // Moves any Entity
 
 void playerAcc(Player player) {// Moves Player based on Accerelation and keyboard inputs
   if (keyPressed) {
+    //Brug "switch" meget nemmere 
+    // https://processing.org/reference/switch.html
     if (key == 'a' || key == 'A'|| key == 'd'|| key == 'D') {
 
       //  println(((Player) entities.get(0)).accMove);
@@ -52,8 +55,12 @@ void playerAcc(Player player) {// Moves Player based on Accerelation and keyboar
   }
 }
 
-void checkCollision() {
-}
+boolean testPInBox(float px, float py, int bx, int by, int bw, int bh) { // tests if a point is in a box
+    if ((px > bx && px < bx + bw) && (py > by && py < by + bh)) {
+      return true;
+    }
+    return false;
+  }
 
 ArrayList loadMap(String path) {
   String[] lines = loadStrings(path);
@@ -112,7 +119,7 @@ ArrayList loadMap(String path) {
   for (String strLine : strLines) {
     String[] numberStr = split(strLine, ',');
 
-    if (numberStr.length >= 7) { //x1, y1, x2, y2, r, g, b 
+    if (numberStr.length >= 7) { //x1, y, x2, y2, r, g, b 
       obstacles.add(new Obstacle(int(numberStr[0]), int(numberStr[1]), int(numberStr[2]), int(numberStr[3]), int(numberStr[4]), int(numberStr[5]), int(numberStr[6])));
       println("ld map RGBmode", numberStr.length, numberStr[4], numberStr[5], numberStr[6]);
     } else if (numberStr.length == 5) {//x1, y1, x2, y2, #rgb4 (hex)
