@@ -1,9 +1,10 @@
 ArrayList<Entity> entities = new ArrayList<Entity>();
 ArrayList<Obstacle> obstacles = new ArrayList<Obstacle>();
 int gametick = 0;
-float gravConstant = 1.0;
+float gravConstant = .0;
 boolean isLeft, isRight, isUp, isDown; 
-
+float maxSpeedX = 16;
+float maxSpeedY = 16;
 
 void setup() {
   size(1024, 512);
@@ -20,6 +21,7 @@ void draw() {
   entityMove();
   playerAcc();
 }
+
 
 void renderALL() {
   for (Obstacle obstacle : obstacles) {
@@ -43,10 +45,10 @@ void entityMove() { // Moves any Entity
 void keyPressed() {
   // Part of playerAcc
   // While forcing Playertype makes accMove equal to accMove * accMultiplier and implements MaxMoveMax
-  if (abs((((Player) entities.get(0)).accMove * ((Player) entities.get(0)).accMultiplier)) > ((Player) entities.get(0)).accMoveMax) {
+  if (abs((((Player) entities.get(0)).accMove + ((Player) entities.get(0)).accMultiplier)) > ((Player) entities.get(0)).accMoveMax) {
     ((Player) entities.get(0)).accMove = ((Player) entities.get(0)).accMoveMax;
   } else {
-    ((Player) entities.get(0)).accMove = abs(((Player) entities.get(0)).accMove * ((Player) entities.get(0)).accMultiplier);
+    ((Player) entities.get(0)).accMove = abs(((Player) entities.get(0)).accMove + ((Player) entities.get(0)).accMultiplier);
   }
   setMove(keyCode, true);
 }
@@ -88,13 +90,13 @@ void playerAcc() {
 
   //if a pressed move left
   if (isLeft == true) {
-    ((Player) entities.get(0)).x = Math.round(((Player) entities.get(0)).x - ((Player) entities.get(0)).accMove);
+    ((Player) entities.get(0)).speedX = Math.round(((Player) entities.get(0)).speedX - ((Player) entities.get(0)).accMove);
     someSortOfPlayerMovement = true;
     println(((Player) entities.get(0)).accMove);
   }
   //if d pressed move right
   if (isRight == true) {
-    ((Player) entities.get(0)).x = Math.round(((Player) entities.get(0)).x + ((Player) entities.get(0)).accMove);
+    ((Player) entities.get(0)).speedX = Math.round(((Player) entities.get(0)).speedX + ((Player) entities.get(0)).accMove);
     someSortOfPlayerMovement = true;
     println(((Player) entities.get(0)).accMove);
   }

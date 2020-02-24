@@ -1,8 +1,8 @@
   class Player extends Entity {
   float accMove;             //Move in current accelerated state
-  float accMoveDefault = 10; //Move with no acceleration speed (after a stop)
-  float accMoveMax = 32;         //Max accelerated speed
-  float accMultiplier = 1.1; //Acceleration
+  float accMoveDefault = 4;  //Move with no acceleration speed (after a stop)
+  float accMoveMax = 1.05;     //Max accelerated speed
+  float accMultiplier = 0.5; //Acceleration
   
   Player(){
     this.x = width/2-entityWidth/2;

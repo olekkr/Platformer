@@ -5,8 +5,8 @@ class Entity {
   int entityWidth = 20;
   int entityHeight = 50;
   Boolean collidable;
-  float speedX = -15;
-  float speedY = -3;
+  float speedX = 0;
+  float speedY = 0;
   boolean weight; //does it move due to gravity?
   color COLOR = unhex("a0AA0000");
   boolean onTheGround = false;
@@ -18,11 +18,13 @@ class Entity {
 
 
   void gravMove() {//move according to gravity
+    this.y = y + speedY;
     if (this.weight) {
       if (onTheGround) {
         this.speedY = 0;
       }
-      {
+      else{
+        
         this.speedY += gravConstant;
       }
     }
@@ -37,54 +39,57 @@ class Entity {
   }
 
   void debug() {
-    //  println("x:", this.x, "y:", this.y, 
-    //  "entityWidth;", this.entityWidth, "entityHeight:", this.entityHeight, 
-    //  "collision:", this.collision, "weight:", this.weight, 
-    //  "speedXY:", this.speedX, this.speedY, gametick,
-    //  "id:", this.id);
+    println("x:", this.x, "y:", this.y, 
+      "entityWidth;", this.entityWidth, "entityHeight:", this.entityHeight, 
+      "collision:", this.collidable, "weight:", this.weight, 
+      "speedXY:", this.speedX, this.speedY, gametick, 
+      "id:", this.id);
   }
 
   void move() {
     gravMove();
-    if (this.collidable) { 
-      float specX = this.x + this.speedX; //speculative x pos
-      float specY = this.y + this.speedX; //speculative y pos
-      for (Obstacle obstacle : obstacles) {
-        if (this.speedX < 0) {
-          if (testPInBox(specX, this.y, obstacle.x, obstacle.y, obstacle.width_, obstacle.height_)) {
-            println("collided!");
-            this.speedX = this.speedX * obstacle.bounceX * -1;
-            specX = obstacle.x + obstacle.width_;
-            break;
-          }
-        }
-        if (testPInBox(specX + this.entityWidth, this.y, obstacle.x, obstacle.y, obstacle.width_, obstacle.height_)) {
-          println("collided!");
-          this.speedX = this.speedX * obstacle.bounceX * -1;
-          specX = obstacle.x - this.entityWidth;
-          break;
-        }
-        //y collisions
-        
-        if (this.speedY < 0) {
-          if (testPInBox(this.x, specY, obstacle.x, obstacle.y, obstacle.width_, obstacle.height_)) {
-            println("collided!");
-            this.speedY = this.speedY * obstacle.bounceY * -1;
-            specY = obstacle.y + obstacle.height_;
-            break;
-          }
-        }
-        if (testPInBox(this.x + specY, this.y, obstacle.x, obstacle.y, obstacle.width_, obstacle.height_)) {
-          println("collided!");
-          this.speedY = this.speedY * obstacle.bounceY * -1;
-          specY = obstacle.y - this.entityWidth;
-          break;
-        }
-        this.y = specY;
-        this.x = specX;
-      }
+    xMove(); 
+    //yMove();    
+    if(this.speedX > maxSpeedX){
+    this.speedX = maxSpeedX;
+    }
+    if(this.speedX > -maxSpeedX){
+    this.speedX = -maxSpeedX;
     }
     
-  
+    if(this.speedY > maxSpeedY){
+    this.speedY = maxSpeedY;
+    }
   }
+
+  void xMove() {
+    float specX = this.x + this.speedX;
+    if (this.collidable) {
+      for (Obstacle obstacle : obstacles) {
+        if (this.speedX < 0) {
+          if (
+          testPInBox(specX, this.y, obstacle.x, obstacle.y, obstacle.width_, obstacle.height_) || //if upper xy entity coor is in obstacle
+          testPInBox(specX, this.y + this.entityHeight, obstacle.x, obstacle.y, obstacle.width_, obstacle.height_))  //if lower xy entity coor is in obstacle  if 
+          //testPInBox(obstacle.x, obstacle)
+          {
+          {
+            println("collided! x-");
+            this.speedX = this.speedX * obstacle.bounceX * -1;
+            this.x = obstacle.x + obstacle.width_;
+          }
+        }
+        if (this.speedX > 0) {
+        }
+        if (testPInBox(specX + this.entityWidth, this.y, obstacle.x, obstacle.y, obstacle.width_, obstacle.height_)) {
+          println("collided x+");
+          println((obstacle.x + this.entityWidth));
+          this.speedX = this.speedX * obstacle.bounceX * -1;
+
+          this.x = obstacle.x - this.entityWidth;
+        }
+      }
+    }
+    this.x = specX;
+  }
+}
 }
