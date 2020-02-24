@@ -1,14 +1,16 @@
 ArrayList<Entity> entities = new ArrayList<Entity>();
 ArrayList<Obstacle> obstacles = new ArrayList<Obstacle>();
 int gametick = 0;
-float gravConstant = 0.30;
+float gravConstant = 1.0;
+boolean isLeft, isRight, isUp, isDown; 
+
 
 void setup() {
   size(1024, 512);
   entities.add(new Player());
   obstacles = loadMap("1.txt");
   strokeWeight(0);
-  frameRate(10);
+  frameRate(60);
 }
 
 void draw() {
@@ -22,7 +24,7 @@ void draw() {
 void renderALL() {
   for (Obstacle obstacle : obstacles) {
     obstacle.render();
-    }
+  }
   for (Entity entity : entities) {
     entity.render();
     entity.debug();
@@ -37,33 +39,105 @@ void entityMove() { // Moves any Entity
   }
 }
 
-void playerAcc() {// Moves Player based on Accerelation and keyboard inputs
-  if (keyPressed) {
-    //Brug "switch" meget nemmere 
-    // https://processing.org/reference/switch.html
-    if (key == 'a' || key == 'A'|| key == 'd'|| key == 'D') {
 
-      // While forcing Playertype makes accMove equal to accMove * accMultiplier
-      ((Player) entities.get(0)).accMove = abs(((Player) entities.get(0)).accMove) * ((Player) entities.get(0)).accMultiplier;
+void keyPressed() {
+  // Part of playerAcc
+  // While forcing Playertype makes accMove equal to accMove * accMultiplier and implements MaxMoveMax
+  if (abs((((Player) entities.get(0)).accMove * ((Player) entities.get(0)).accMultiplier)) > ((Player) entities.get(0)).accMoveMax) {
+    ((Player) entities.get(0)).accMove = ((Player) entities.get(0)).accMoveMax;
+  } else {
+    ((Player) entities.get(0)).accMove = abs(((Player) entities.get(0)).accMove * ((Player) entities.get(0)).accMultiplier);
+  }
+  setMove(keyCode, true);
+}
 
-      if (key == 'a' || key == 'A') { // move left
-        ((Player) entities.get(0)).x = Math.round(((Player) entities.get(0)).x - ((Player) entities.get(0)).accMove) ;
-      }
-      if (key == 'd' || key == 'D') { // move right
-        ((Player) entities.get(0)).x = Math.round(((Player) entities.get(0)).x + ((Player) entities.get(0)).accMove) ;
-      }
-    }
-  } else { // 
+void keyReleased() {
+  setMove(keyCode, false);
+}
+boolean setMove(int k, boolean b) {
+  switch (k) {
+  case 87:
+    return isUp = b;
+
+  case 83:
+    return isDown = b;
+
+  case 65:
+    return isLeft = b;
+
+  case 68:
+    return isRight = b;
+
+  case UP:
+    return isUp = b;
+
+  case DOWN:
+    return isDown = b;
+
+  case LEFT:
+    return isLeft = b;
+
+  case RIGHT:
+    return isRight = b;
+  default:
+    return b;
+  }
+}
+void playerAcc() {
+  boolean someSortOfPlayerMovement = false;
+
+  //if a pressed move left
+  if (isLeft == true) {
+    ((Player) entities.get(0)).x = Math.round(((Player) entities.get(0)).x - ((Player) entities.get(0)).accMove);
+    someSortOfPlayerMovement = true;
+    println(((Player) entities.get(0)).accMove);
+  }
+  //if d pressed move right
+  if (isRight == true) {
+    ((Player) entities.get(0)).x = Math.round(((Player) entities.get(0)).x + ((Player) entities.get(0)).accMove);
+    someSortOfPlayerMovement = true;
+    println(((Player) entities.get(0)).accMove);
+  }
+  if (someSortOfPlayerMovement == false) {
+    //reset to default speed
     ((Player) entities.get(0)).accMove = ((Player) entities.get(0)).accMoveDefault;
+    println(((Player) entities.get(0)).accMove);
   }
 }
 
+//void playerAcc() {// Moves Player based on Accerelation and keyboard inputs
+
+//if (keyPressed) {
+//  if (key == 'a' || key == 'A'|| key == 'd'|| key == 'D') {
+
+//    // While forcing Playertype makes accMove equal to accMove * accMultiplier and implements MaxMoveMax
+
+//    if (abs((((Player) entities.get(0)).accMove * ((Player) entities.get(0)).accMultiplier)) > ((Player) entities.get(0)).accMoveMax) {
+//      ((Player) entities.get(0)).accMove = ((Player) entities.get(0)).accMoveMax;
+//    } else {
+//      ((Player) entities.get(0)).accMove = abs(((Player) entities.get(0)).accMove * ((Player) entities.get(0)).accMultiplier);
+//    }
+
+//    if (key == 'a' || key == 'A') { // move left
+//      ((Player) entities.get(0)).x = Math.round(((Player) entities.get(0)).x - ((Player) entities.get(0)).accMove) ;
+//    }
+//    if (key == 'd' || key == 'D') { // move right
+//      ((Player) entities.get(0)).x = Math.round(((Player) entities.get(0)).x + ((Player) entities.get(0)).accMove) ;
+//    }
+//  } 
+//  println(((Player) entities.get(0)).accMove);
+//} else { // reset to default speed
+//  ((Player) entities.get(0)).accMove = ((Player) entities.get(0)).accMoveDefault;
+//  println(((Player) entities.get(0)).accMove);
+//}
+//}
+
 boolean testPInBox(float px, float py, int bx, int by, int bw, int bh) { // tests if a point is in a box
-    if ((px > bx && px < bx + bw) && (py > by && py < by + bh)) {
-      return true;
-    }
-    return false;
+  if ((px > bx && px < bx + bw) && (py > by && py < by + bh)) {
+    return true;
   }
+  return false;
+}
 
 ArrayList loadMap(String path) {
   String[] lines = loadStrings(path);
