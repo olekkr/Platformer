@@ -4,7 +4,7 @@
   float accMultiplier = 1.1; //Acceleration
   
   Player(){
-    this.x = width/2-entityWidth/2+400;
+    this.x = width/2-entityWidth/2;
     this.y = height/2;
     this.entityWidth = 64;
     this.entityHeight = 50;

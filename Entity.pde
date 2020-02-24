@@ -6,7 +6,7 @@ class Entity {
   int entityHeight = 50;
   Boolean collidable;
   float speedX = -15;
-  float speedY = -10;
+  float speedY = -3;
   boolean weight; //does it move due to gravity?
   color COLOR = unhex("a0AA0000");
   boolean onTheGround = false;
@@ -15,13 +15,7 @@ class Entity {
   Entity() {
   }
 
-  void move(ArrayList<Obstacle> obstacles) { //move according to vel
-    if (this.collidable) {
-    }
-    //this.x = this.x + this.speedX;
-    //this.y = this.y + this.speedY;
-    xMove();
-  }
+
 
   void gravMove() {//move according to gravity
     if (this.weight) {
@@ -43,29 +37,54 @@ class Entity {
   }
 
   void debug() {
-  //  println("x:", this.x, "y:", this.y, 
-  //  "entityWidth;", this.entityWidth, "entityHeight:", this.entityHeight, 
-  //  "collision:", this.collision, "weight:", this.weight, 
-  //  "speedXY:", this.speedX, this.speedY, gametick,
-  //  "id:", this.id);
+    //  println("x:", this.x, "y:", this.y, 
+    //  "entityWidth;", this.entityWidth, "entityHeight:", this.entityHeight, 
+    //  "collision:", this.collision, "weight:", this.weight, 
+    //  "speedXY:", this.speedX, this.speedY, gametick,
+    //  "id:", this.id);
   }
 
-  void xMove() {
+  void move() {
+    gravMove();
     if (this.collidable) { 
       float specX = this.x + this.speedX; //speculative x pos
-      if (this.speedX < 0) {
-        for(Obstacle obstacle : obstacles){
+      float specY = this.y + this.speedX; //speculative y pos
+      for (Obstacle obstacle : obstacles) {
+        if (this.speedX < 0) {
           if (testPInBox(specX, this.y, obstacle.x, obstacle.y, obstacle.width_, obstacle.height_)) {
             println("collided!");
             this.speedX = this.speedX * obstacle.bounceX * -1;
             specX = obstacle.x + obstacle.width_;
+            break;
           }
-          
-          
-          this.x = specX;
         }
+        if (testPInBox(specX + this.entityWidth, this.y, obstacle.x, obstacle.y, obstacle.width_, obstacle.height_)) {
+          println("collided!");
+          this.speedX = this.speedX * obstacle.bounceX * -1;
+          specX = obstacle.x - this.entityWidth;
+          break;
+        }
+        //y collisions
         
+        if (this.speedY < 0) {
+          if (testPInBox(this.x, specY, obstacle.x, obstacle.y, obstacle.width_, obstacle.height_)) {
+            println("collided!");
+            this.speedY = this.speedY * obstacle.bounceY * -1;
+            specY = obstacle.y + obstacle.height_;
+            break;
+          }
+        }
+        if (testPInBox(this.x + specY, this.y, obstacle.x, obstacle.y, obstacle.width_, obstacle.height_)) {
+          println("collided!");
+          this.speedY = this.speedY * obstacle.bounceY * -1;
+          specY = obstacle.y - this.entityWidth;
+          break;
+        }
+        this.y = specY;
+        this.x = specX;
       }
     }
+    
+  
   }
 }

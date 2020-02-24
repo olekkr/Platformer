@@ -1,7 +1,7 @@
 ArrayList<Entity> entities = new ArrayList<Entity>();
 ArrayList<Obstacle> obstacles = new ArrayList<Obstacle>();
 int gametick = 0;
-float gravConstant = 0.0;
+float gravConstant = 0.30;
 
 void setup() {
   size(1024, 512);
@@ -32,7 +32,7 @@ void renderALL() {
 void entityMove() { // Moves any Entity
   //println(entities.get(0).x); // does not work rn for some reason
   for (Entity entity : entities ) {
-    entity.move(obstacles);
+    entity.move();
     entity.gravMove();
   }
 }
