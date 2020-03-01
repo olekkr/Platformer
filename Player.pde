@@ -7,8 +7,8 @@
   Player(){
     this.x = width/2-entityWidth/2;
     this.y = height/2;
-    this.entityWidth = 64;
-    this.entityHeight = 50;
+    this.entityWidth = 33;
+    this.entityHeight = 64;
     this.collidable = true;
     this.weight = true;
   }

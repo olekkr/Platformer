@@ -3,15 +3,20 @@ ArrayList<Obstacle> obstacles = new ArrayList<Obstacle>();
 int gametick = 0;
 float gravConstant = .0;
 boolean isLeft, isRight, isUp, isDown; 
-float maxSpeedX = 16;
-float maxSpeedY = 16;
+float maxSpeedX = 20;
+float maxSpeedY = 20;
+float decelerationK = 0.96;
+float decelerationK2 = 0.80;
+
+
 
 void setup() {
-  size(1024, 512);
+  size(1366, 768);
   entities.add(new Player());
   obstacles = loadMap("1.txt");
   strokeWeight(0);
   frameRate(60);
+  entities.add(new Entity());
 }
 
 void draw() {
@@ -20,6 +25,7 @@ void draw() {
   renderALL();
   entityMove();
   playerAcc();
+  println("#");
 }
 
 
@@ -56,6 +62,7 @@ void keyPressed() {
 void keyReleased() {
   setMove(keyCode, false);
 }
+
 boolean setMove(int k, boolean b) {
   switch (k) {
   case 87:
@@ -91,19 +98,24 @@ void playerAcc() {
   //if a pressed move left
   if (isLeft == true) {
     ((Player) entities.get(0)).speedX = Math.round(((Player) entities.get(0)).speedX - ((Player) entities.get(0)).accMove);
-    someSortOfPlayerMovement = true;
-    println(((Player) entities.get(0)).accMove);
+      someSortOfPlayerMovement = true;
+    
+    //println(((Player) entities.get(0)).accMove);
   }
   //if d pressed move right
   if (isRight == true) {
     ((Player) entities.get(0)).speedX = Math.round(((Player) entities.get(0)).speedX + ((Player) entities.get(0)).accMove);
     someSortOfPlayerMovement = true;
-    println(((Player) entities.get(0)).accMove);
+    //println(((Player) entities.get(0)).accMove);
+    
   }
   if (someSortOfPlayerMovement == false) {
+    for(Entity entity : entities){
+      entity.decelX();
+    }
     //reset to default speed
     ((Player) entities.get(0)).accMove = ((Player) entities.get(0)).accMoveDefault;
-    println(((Player) entities.get(0)).accMove);
+    //println(((Player) entities.get(0)).accMove);
   }
 }
 
@@ -134,7 +146,9 @@ void playerAcc() {
 //}
 //}
 
-boolean testPInBox(float px, float py, int bx, int by, int bw, int bh) { // tests if a point is in a box
+
+
+boolean testPInBox(float px, float py, float bx, float by, float bw, float bh) { // tests if a point is in a box
   if ((px > bx && px < bx + bw) && (py > by && py < by + bh)) {
     return true;
   }

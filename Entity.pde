@@ -1,5 +1,7 @@
 class Entity {
 
+
+
   float x;
   float y;
   int entityWidth = 20;
@@ -11,20 +13,41 @@ class Entity {
   color COLOR = unhex("a0AA0000");
   boolean onTheGround = false;
   int id = int(random(99))+100*gametick;
+  
 
-  Entity() {
+  Entity(float xpos, float ypos, boolean weight) {
+    this.x = xpos;
+    this.y = ypos;
+    this.weight = weight;
+  }
+  Entity(){
+    this.x = width/2-entityWidth/2+400;
+    this.y = height/2;
+    this.entityWidth = 33;
+    this.entityHeight = 64;
+    this.collidable = true;
+    this.weight = true;
+    this.onTheGround = false;
+  
   }
 
-
+  void decelX() {
+    this.speedX = this.speedX * decelerationK; 
+    if (abs(this.speedX) < maxSpeedX/4) {
+      this.speedX = this.speedX * decelerationK2;
+    } 
+    if (abs(this.speedX) < 0.05) {
+      this.speedX = 0;
+    }
+  }
 
   void gravMove() {//move according to gravity
     this.y = y + speedY;
     if (this.weight) {
       if (onTheGround) {
         this.speedY = 0;
-      }
-      else{
-        
+      } else {
+
         this.speedY += gravConstant;
       }
     }
@@ -49,16 +72,24 @@ class Entity {
   void move() {
     gravMove();
     xMove(); 
-    //yMove();    
-    if(this.speedX > maxSpeedX){
-    this.speedX = maxSpeedX;
+    //yMove(); 
+    //decelX();
+
+
+
+    if (this.speedX > maxSpeedX) {
+      this.speedX = maxSpeedX;
     }
-    if(this.speedX > -maxSpeedX){
-    this.speedX = -maxSpeedX;
+    if (this.speedX < -maxSpeedX) {
+      this.speedX = -maxSpeedX;
     }
-    
-    if(this.speedY > maxSpeedY){
-    this.speedY = maxSpeedY;
+
+    if (this.speedY > maxSpeedY) {
+      this.speedY = maxSpeedY;
+    }
+
+    if (this.speedY < -maxSpeedY) {
+      this.speedY = -maxSpeedY;
     }
   }
 
@@ -68,28 +99,28 @@ class Entity {
       for (Obstacle obstacle : obstacles) {
         if (this.speedX < 0) {
           if (
-          testPInBox(specX, this.y, obstacle.x, obstacle.y, obstacle.width_, obstacle.height_) || //if upper xy entity coor is in obstacle
-          testPInBox(specX, this.y + this.entityHeight, obstacle.x, obstacle.y, obstacle.width_, obstacle.height_))  //if lower xy entity coor is in obstacle  if 
-          //testPInBox(obstacle.x, obstacle)
-          {
-          {
-            println("collided! x-");
+            (testPInBox(specX, this.y, obstacle.x, obstacle.y, obstacle.width_, obstacle.height_) || //if upper xy entity coor is in obstacle
+            testPInBox(specX, this.y + this.entityHeight, obstacle.x, obstacle.y, obstacle.width_, obstacle.height_)) || //if lower xy entity coor is in obstacle  if 
+            (testPInBox(obstacle.x, obstacle.y, this.x, this.y, this.entityWidth, this.entityHeight)) ||
+            testPInBox(obstacle.x, obstacle.y + obstacle.height_, this.x, this.y, this.entityWidth, this.entityHeight)) {
+            {
+              println("collided! x-" + str(this.speedX * obstacle.bounceX * -1));
+              this.speedX = this.speedX * obstacle.bounceX * -1;
+              specX = obstacle.x + obstacle.width_;
+              
+            }
+          } else if (this.speedX > 0) {
+          }
+          if (testPInBox(specX + this.entityWidth, this.y, obstacle.x, obstacle.y, obstacle.width_, obstacle.height_)) {
+            println("collided x+");
+            println("SPEED:", this.speedX );
             this.speedX = this.speedX * obstacle.bounceX * -1;
-            this.x = obstacle.x + obstacle.width_;
+
+            this.x = obstacle.x - this.entityWidth;
           }
         }
-        if (this.speedX > 0) {
-        }
-        if (testPInBox(specX + this.entityWidth, this.y, obstacle.x, obstacle.y, obstacle.width_, obstacle.height_)) {
-          println("collided x+");
-          println((obstacle.x + this.entityWidth));
-          this.speedX = this.speedX * obstacle.bounceX * -1;
-
-          this.x = obstacle.x - this.entityWidth;
-        }
       }
+      this.x = specX;
     }
-    this.x = specX;
   }
-}
 }

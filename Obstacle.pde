@@ -1,11 +1,11 @@
 class Obstacle{
-  int x;
-  int y;
-  int width_;
-  int height_;
+  float x;
+  float y;
+  float width_;
+  float height_;
   int id; 
   color COLOR;
-  float bounceX = 1.00;
+  float bounceX = 0.00;
   float bounceY = 0.00;
   
  Obstacle(int x, int y, int width_, int height_, int RED, int GREEN, int BLUE){//RGB mode
