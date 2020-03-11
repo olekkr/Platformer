@@ -17,6 +17,7 @@ class Obstacle{
   this.COLOR = unhex("FF" + str(RED) + str(GREEN) + str(BLUE));
   println("obstacle color", hex(this.COLOR));
  }
+
  Obstacle(int x, int y, int width_, int height_){
   id = int(random(999))+millis()*1000;//posmode
   this.x = x;
@@ -37,6 +38,6 @@ class Obstacle{
  }
  void render(){
    fill(COLOR);
-   rect(this.x/1,this.y/1,this.x+this.width_/1,this.y + this.height_/1);
+   rect(this.x/1,this.y/1, this.width_/1,this.height_/1);
  }
 }

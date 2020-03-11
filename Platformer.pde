@@ -1,21 +1,23 @@
 ArrayList<Entity> entities = new ArrayList<Entity>();
 ArrayList<Obstacle> obstacles = new ArrayList<Obstacle>();
 int gametick = 0;
-float gravConstant = .0;
+float gravConstant = 0.5;
 boolean isLeft, isRight, isUp, isDown; 
 float maxSpeedX = 20;
-float maxSpeedY = 20;
+float maxSpeedY = 40;
 float decelerationK = 0.96;
 float decelerationK2 = 0.80;
 
-
+void mousePressed(){
+  entities.get(0).debug();
+}
 
 void setup() {
   size(1366, 768);
+  frameRate(60);
   entities.add(new Player());
   obstacles = loadMap("1.txt");
   strokeWeight(0);
-  frameRate(60);
   entities.add(new Entity());
 }
 
@@ -25,7 +27,7 @@ void draw() {
   renderALL();
   entityMove();
   playerAcc();
-  println("#");
+  //println("#");
 }
 
 
@@ -35,7 +37,7 @@ void renderALL() {
   }
   for (Entity entity : entities) {
     entity.render();
-    entity.debug();
+    //entity.debug();
   }
 }
 
@@ -77,7 +79,7 @@ boolean setMove(int k, boolean b) {
   case 68:
     return isRight = b;
 
-  case UP:
+  case UP: 
     return isUp = b;
 
   case DOWN:
@@ -106,12 +108,18 @@ void playerAcc() {
   if (isRight == true) {
     ((Player) entities.get(0)).speedX = Math.round(((Player) entities.get(0)).speedX + ((Player) entities.get(0)).accMove);
     someSortOfPlayerMovement = true;
-    //println(((Player) entities.get(0)).accMove);
-    
+    //println(((Player) entities.get(0)).accMove); 
   }
+  
+  if (isUp == true) {
+    ((Player) entities.get(0)).jump();
+    someSortOfPlayerMovement = true;
+    //println(((Player) entities.get(0)).accMove); 
+  }
+  
   if (someSortOfPlayerMovement == false) {
     for(Entity entity : entities){
-      entity.decelX();
+      entity.speedX = 0;
     }
     //reset to default speed
     ((Player) entities.get(0)).accMove = ((Player) entities.get(0)).accMoveDefault;
