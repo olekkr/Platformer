@@ -13,7 +13,7 @@ class Entity {
   color COLOR = unhex("a0AA0000");
   boolean onTheGround = false;
   int id = int(random(99))+100*gametick;
-
+  float dynamicDecelR = 0;
 
   Entity(float xpos, float ypos, boolean weight) {
     this.x = xpos;
@@ -31,7 +31,10 @@ class Entity {
   }
 
   void decelX() {
-    this.speedX = this.speedX * decelerationK; 
+    this.speedX = this.speedX * decelerationK;
+    if(onTheGround){
+      this.speedX -= this.speedX * dynamicDecelR;
+    }
     if (abs(this.speedX) < maxSpeedX/4) {
       this.speedX = this.speedX * decelerationK2;
     } 
@@ -154,7 +157,7 @@ class Entity {
             println("collided y+");
             println("SPEED:", this.speedX );
             this.speedY = this.speedX * obstacle.bounceX * -1;
-
+            this.landingEvent(obstacle);
             specY = obstacle.y - this.entityHeight;
           }
         }
@@ -162,5 +165,7 @@ class Entity {
       this.y = specY;
     }
   }
-  void landingEvent(){}
+  void landingEvent(Obstacle obstacle){
+    this.dynamicDecelR = obstacle.decelR;
+  }
 }

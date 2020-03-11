@@ -4,9 +4,10 @@ int gametick = 0;
 float gravConstant = 0.5;
 boolean isLeft, isRight, isUp, isDown; 
 float maxSpeedX = 20;
-float maxSpeedY = 40;
+float maxSpeedY = 20;
 float decelerationK = 0.96;
 float decelerationK2 = 0.80;
+float staticDecelR = 0;
 
 void mousePressed(){
   entities.get(0).debug();
@@ -113,11 +114,10 @@ void playerAcc() {
   
   if (isUp == true) {
     ((Player) entities.get(0)).jump();
-    someSortOfPlayerMovement = true;
     //println(((Player) entities.get(0)).accMove); 
   }
   
-  if (someSortOfPlayerMovement == false) {
+  if (! someSortOfPlayerMovement) {
     for(Entity entity : entities){
       entity.speedX = 0;
     }

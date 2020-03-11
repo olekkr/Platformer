@@ -7,6 +7,7 @@ class Obstacle{
   color COLOR;
   float bounceX = 0.00;
   float bounceY = 0.00;
+  float decelR = 0.80;
   
  Obstacle(int x, int y, int width_, int height_, int RED, int GREEN, int BLUE){//RGB mode
   id = int(random(999))+millis()*1000;
