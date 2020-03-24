@@ -19,17 +19,17 @@ class Player extends Entity {
 
 
   void jump() {
-    if (this.jumpStatus == 0) {
+    println("jumpstatus", this.jumpStatus);
+      if (this.jumpStatus == 0) {
       this.speedY = jump1Vel;
       this.jumpStatus = 1;
-    }
-    else if(jumpStatus == 1){
+    } else if (jumpStatus == 1) {
       this.speedY = jump2Vel;
       this.jumpStatus = 2;
     }
   }
-  
-  void landingEvent(Obstacle obstacle){
+
+  void landingEvent(Obstacle obstacle) {
     this.jumpStatus = 0;
   }
 }

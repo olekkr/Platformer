@@ -27,7 +27,6 @@ class Entity {
     this.entityHeight = 64;
     this.collidable = true;
     this.weight = true;
-    this.onTheGround = false;
   }
 
   void decelX() {
@@ -75,7 +74,6 @@ class Entity {
     xMove(); 
     yMove(); 
     decelX();
-    println(this.dynamicDecelR);
 
     if (this.speedX > maxSpeedX) {
       this.speedX = maxSpeedX;
@@ -116,7 +114,7 @@ class Entity {
             testPInBox(obstacle.x, obstacle.y, specX, this.y, this.entityWidth, this.entityHeight) ||
             testPInBox(obstacle.x, obstacle.y + obstacle.height_, specX, this.y, this.entityWidth, this.entityHeight)) {
             println("collided x+");
-            println("SPEED:", this.speedX );
+            //println("SPEED:", this.speedX );
             this.speedX = this.speedX * obstacle.bounceX * -1;
 
             specX = obstacle.x - this.entityWidth;
@@ -139,22 +137,18 @@ class Entity {
             testPInBox(obstacle.x, obstacle.y, this.x, specY, this.entityWidth, this.entityHeight) ||
             testPInBox(obstacle.x, obstacle.y + obstacle.height_, this.x, specY, this.entityWidth, this.entityHeight)) {
 
-            println("collided! y-" + str(this.speedY * obstacle.bounceY * -1));
+            //println("collided! y-" + str(this.speedY * obstacle.bounceY * -1));
             this.speedY = this.speedY * obstacle.bounceY * -1;
             specY = obstacle.y + obstacle.height_;
             this.onTheGround = true;
           }
-          else {
-              this.onTheGround = false;
-            }
         } else if (this.speedY > 0) {
           if (
             testPInBox(this.x, specY + this.entityHeight, obstacle.x, obstacle.y, obstacle.width_, obstacle.height_) || //if upper xy entity coor is in obstacle
             testPInBox(this.x + this.entityWidth, specY + this.entityHeight, obstacle.x, obstacle.y, obstacle.width_, obstacle.height_) || //if lower xy entity coor is in obstacle  if 
             testPInBox(obstacle.x, obstacle.y, this.x, specY, this.entityWidth, this.entityHeight) ||
             testPInBox(obstacle.x, obstacle.y + obstacle.height_, specY, this.y, this.entityWidth, this.entityHeight)) {
-            println("collided y+");
-            println("SPEED:", this.speedX );
+            //println("collided y+");
             this.speedY = this.speedX * obstacle.bounceX * -1;
             this.landingEvent(obstacle);
             specY = obstacle.y - this.entityHeight;
@@ -165,6 +159,5 @@ class Entity {
     }
   }
   void landingEvent(Obstacle obstacle){
-    this.dynamicDecelR = obstacle.decelR;
   }
 }

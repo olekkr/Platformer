@@ -61,6 +61,9 @@ void keyPressed() {
     ((Player) entities.get(0)).accMove = abs(((Player) entities.get(0)).accMove + ((Player) entities.get(0)).accMultiplier);
   }
   setMove(keyCode, true);
+  if(isUp){
+  ((Player)entities.get(0)).jump();
+  }
 }
 
 void moveNextMapEvent(){
@@ -119,7 +122,7 @@ void playerAcc() {
   }
 
   if (isUp == true) {
-    ((Player) entities.get(0)).jump();
+    //((Player) entities.get(0)).jump();
     //println(((Player) entities.get(0)).accMove);
   }
 
