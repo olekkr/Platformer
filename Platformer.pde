@@ -1,13 +1,14 @@
 ArrayList<Entity> entities = new ArrayList<Entity>();
 ArrayList<Obstacle> obstacles = new ArrayList<Obstacle>();
 int gametick = 0;
-float gravConstant = 0.5;
+float gravConstant = 0.65;
 boolean isLeft, isRight, isUp, isDown; 
 float maxSpeedX = 20;
 float maxSpeedY = 20;
 float decelerationK = 0.96;
 float decelerationK2 = 0.80;
 float staticDecelR = 0;
+int currMap = 1;
 
 void mousePressed(){
   entities.get(0).debug();
@@ -60,6 +61,11 @@ void keyPressed() {
     ((Player) entities.get(0)).accMove = abs(((Player) entities.get(0)).accMove + ((Player) entities.get(0)).accMultiplier);
   }
   setMove(keyCode, true);
+}
+
+void moveNextMapEvent(){
+  obstacles = loadMap(++currMap +".txt");
+  entities.get(0).x = entities.get(0).entityWidth;
 }
 
 void keyReleased() {

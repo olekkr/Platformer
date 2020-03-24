@@ -69,14 +69,12 @@ class Entity {
       "speedXY:", this.speedX, this.speedY, gametick, 
       "id:", this.id);
   }
-
+  
   void move() {
     gravMove();
     xMove(); 
     yMove(); 
     //decelX();
-
-
 
     if (this.speedX > maxSpeedX) {
       this.speedX = maxSpeedX;
