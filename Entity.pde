@@ -1,7 +1,5 @@
 class Entity {
 
-
-
   float x;
   float y;
   int entityWidth = 20;
@@ -31,7 +29,7 @@ class Entity {
 
   void decelX() {
     //this.speedX *= decelerationK;
-    if(onTheGround){
+    if (onTheGround) {
       this.speedX -= this.speedX * dynamicDecelR;
     }
     if (abs(this.speedX) < maxSpeedX/4) {
@@ -45,11 +43,7 @@ class Entity {
   void gravMove() {//move according to gravity
     //this.y = y + speedY;
     if (this.weight) {
-      if (onTheGround) {
-        this.speedY = 0;
-      } else {
-        this.speedY += gravConstant;
-      }
+      this.speedY += gravConstant;
     }
   }
 
@@ -68,7 +62,7 @@ class Entity {
       "speedXY:", this.speedX, this.speedY, gametick, 
       "id:", this.id);
   }
-  
+
   void move() {
     gravMove();
     xMove(); 
@@ -158,6 +152,6 @@ class Entity {
       this.y = specY;
     }
   }
-  void landingEvent(Obstacle obstacle){
+  void landingEvent(Obstacle obstacle) {
   }
 }

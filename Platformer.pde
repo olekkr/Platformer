@@ -1,14 +1,14 @@
 ArrayList<Entity> entities = new ArrayList<Entity>();
 ArrayList<Obstacle> obstacles = new ArrayList<Obstacle>();
 int gametick = 0;
-float gravConstant = 0.65;
+float gravConstant = 0.60;
 boolean isLeft, isRight, isUp, isDown; 
 float maxSpeedX = 20;
 float maxSpeedY = 20;
 float decelerationK = 0.98;
 float decelerationK2 = 0.96;
 float staticDecelR = 0;
-int currMap = 1;
+int currMap = 2;
 
 void mousePressed() {
   entities.get(0).debug();
@@ -49,6 +49,10 @@ void entityMove() { // Moves any Entity
     entity.move();
     entity.gravMove();
   }
+  if( ((Player) entities.get(0)).x > width){
+    moveNextMapEvent();
+  }
+  
 }
 
 

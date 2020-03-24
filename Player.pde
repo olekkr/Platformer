@@ -25,7 +25,7 @@ class Player extends Entity {
       this.jumpStatus = 1;
     } else if (jumpStatus == 1) {
       this.speedY = jump2Vel;
-      this.jumpStatus = 2;
+      this.jumpStatus = 1;
     }
   }
 
