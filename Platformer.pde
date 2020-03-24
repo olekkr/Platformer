@@ -17,7 +17,7 @@ void setup() {
   size(1366, 768);
   frameRate(60);
   entities.add(new Player());
-  obstacles = loadMap("1.txt");
+  obstacles = loadMap("2.txt");
   strokeWeight(0);
   entities.add(new Entity());
 }
