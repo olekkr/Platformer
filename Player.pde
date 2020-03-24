@@ -22,9 +22,8 @@ class Player extends Entity {
     if (this.jumpStatus == 0) {
       this.speedY = jump1Vel;
       this.jumpStatus = 1;
-      this.dynamicDecelR = 0;
     }
-    
+    this.dynamicDecelR = 0;
   }
   
   void landingEvent(Obstacle obstacle){

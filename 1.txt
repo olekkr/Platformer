@@ -1,11 +1,15 @@
 "comments1234567890AaBbCcDdEeFf" only numbers"," commas"," "a-f" & "A-F" are interpetered when uncommented
 "coor1, coor2, coor3, coor4, *RED, *GREEN, *BLUE" "or use hex: ff 00 00 00"
 
-10, 480, 1000, 500, #FFA0F010
+10,           480, 1000, 500, #FFA0F010
 
 0, 0, 30, 512, #FFA070A0
 0, 0, 300, 512, #ff dd dd dd
-
 1000, 0, 30, 1100, #ff 00 00 00
 0, 0, 1000, 30, #ffffffff
+
+"img 
+"sqr 
+"decals 
+"objct 0 0 10 5 true
 

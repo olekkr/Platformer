@@ -31,12 +31,12 @@ class Entity {
   }
 
   void decelX() {
-    this.speedX = this.speedX * decelerationK;
+    //this.speedX *= decelerationK;
     if(onTheGround){
       this.speedX -= this.speedX * dynamicDecelR;
     }
     if (abs(this.speedX) < maxSpeedX/4) {
-      this.speedX = this.speedX * decelerationK2;
+      this.speedX *= decelerationK2;
     } 
     if (abs(this.speedX) < 0.05) {
       this.speedX = 0;
@@ -74,7 +74,8 @@ class Entity {
     gravMove();
     xMove(); 
     yMove(); 
-    //decelX();
+    decelX();
+    println(this.dynamicDecelR);
 
 
 
