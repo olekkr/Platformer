@@ -5,12 +5,12 @@ float gravConstant = 0.65;
 boolean isLeft, isRight, isUp, isDown; 
 float maxSpeedX = 20;
 float maxSpeedY = 20;
-float decelerationK = 0.96;
-float decelerationK2 = 0.80;
+float decelerationK = 0.98;
+float decelerationK2 = 0.96;
 float staticDecelR = 0;
 int currMap = 1;
 
-void mousePressed(){
+void mousePressed() {
   entities.get(0).debug();
 }
 
@@ -18,7 +18,7 @@ void setup() {
   size(1366, 768);
   frameRate(60);
   entities.add(new Player());
-  obstacles = loadMap("1.txt");
+  obstacles = loadMap("2.txt");
   strokeWeight(0);
   entities.add(new Entity());
 }
@@ -107,24 +107,24 @@ void playerAcc() {
   //if a pressed move left
   if (isLeft == true) {
     ((Player) entities.get(0)).speedX = Math.round(((Player) entities.get(0)).speedX - ((Player) entities.get(0)).accMove);
-      someSortOfPlayerMovement = true;
-    
+    someSortOfPlayerMovement = true;
+
     //println(((Player) entities.get(0)).accMove);
   }
   //if d pressed move right
   if (isRight == true) {
     ((Player) entities.get(0)).speedX = Math.round(((Player) entities.get(0)).speedX + ((Player) entities.get(0)).accMove);
     someSortOfPlayerMovement = true;
-    //println(((Player) entities.get(0)).accMove); 
+    //println(((Player) entities.get(0)).accMove);
   }
-  
+
   if (isUp == true) {
     ((Player) entities.get(0)).jump();
-    //println(((Player) entities.get(0)).accMove); 
+    //println(((Player) entities.get(0)).accMove);
   }
-  
+
   if (! someSortOfPlayerMovement) {
-    for(Entity entity : entities){
+    for (Entity entity : entities) {
       entity.speedX = 0;
     }
     //reset to default speed
