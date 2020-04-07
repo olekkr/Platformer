@@ -49,10 +49,12 @@ void entityMove() { // Moves any Entity
     entity.move();
     entity.gravMove();
   }
-  if( ((Player) entities.get(0)).x > width){
+  if ( ((Player) entities.get(0)).x > width) {
     moveNextMapEvent();
   }
-  
+  if ( ((Player) entities.get(0)).x < -((Player) entities.get(0)).entityWidth - 3) {
+    movePrevMapEvent();
+  }
 }
 
 
@@ -65,16 +67,19 @@ void keyPressed() {
     ((Player) entities.get(0)).accMove = abs(((Player) entities.get(0)).accMove + ((Player) entities.get(0)).accMultiplier);
   }
   setMove(keyCode, true);
-  if(isUp){
-  ((Player)entities.get(0)).jump();
+  if (isUp) {
+    ((Player)entities.get(0)).jump();
   }
 }
 
-void moveNextMapEvent(){
+void moveNextMapEvent() {
   obstacles = loadMap(++currMap +".txt");
   entities.get(0).x = entities.get(0).entityWidth;
 }
-
+void movePrevMapEvent() {
+  obstacles = loadMap(--currMap +".txt");
+  entities.get(0).x = width;
+}
 void keyReleased() {
   setMove(keyCode, false);
 }
@@ -176,6 +181,35 @@ boolean testPInBox(float px, float py, float bx, float by, float bw, float bh) {
   return false;
 }
 
+boolean isValidChar(char curr) {
+  return curr == 'a' ||
+    curr == 'b' ||
+    curr == 'c' ||
+    curr == 'd' ||
+    curr == 'b' ||
+    curr == 'e' ||
+    curr == 'f' ||
+    curr == 'A' ||
+    curr == 'B' ||
+    curr == 'C' ||
+    curr == 'D' ||
+    curr == 'E' ||
+    curr == 'F' ||
+    curr == 'f' ||
+    curr == ',' ||
+    curr == '1' ||
+    curr == '2' ||
+    curr == '3' ||
+    curr == '4' ||
+    curr == '5' ||
+    curr == '6' ||
+    curr == '7' ||
+    curr == '8' ||
+    curr == '9' ||
+    curr == '0';
+}
+
+
 ArrayList loadMap(String path) {
   String[] lines = loadStrings(path);
   String[] strLines = {};
@@ -184,6 +218,11 @@ ArrayList loadMap(String path) {
 
   //interpreter
   for (String str : lines) {
+    String[] NextMapRX = match(str, "@NEXTMAP \\s* = \\s* (\\d)");
+    if (str.toCharArray()[0] == '@') {
+      
+      break;
+    }
     comment = false;
     String outputStr = "";
     for (int i = 0; i < str.length(); i++) {
@@ -195,33 +234,7 @@ ArrayList loadMap(String path) {
       if (comment) {
         continue;
       }
-      if (
-        curr == 'a' ||
-        curr == 'b' ||
-        curr == 'c' ||
-        curr == 'd' ||
-        curr == 'b' ||
-        curr == 'e' ||
-        curr == 'f' ||
-        curr == 'A' ||
-        curr == 'B' ||
-        curr == 'C' ||
-        curr == 'D' ||
-        curr == 'E' ||
-        curr == 'F' ||
-        curr == 'f' ||
-        curr == ',' ||
-        curr == '1' ||
-        curr == '2' ||
-        curr == '3' ||
-        curr == '4' ||
-        curr == '5' ||
-        curr == '6' ||
-        curr == '7' ||
-        curr == '8' ||
-        curr == '9' ||
-        curr == '0'
-        ) {
+      if (isValidChar(curr)) {
         outputStr += curr;
       }
     }
