@@ -218,11 +218,7 @@ ArrayList loadMap(String path) {
 
   //interpreter
   for (String str : lines) {
-    String[] NextMapRX = match(str, "@NEXTMAP \\s* = \\s* (\\d)");
-    if (str.toCharArray()[0] == '@') {
-      
-      break;
-    }
+    
     comment = false;
     String outputStr = "";
     for (int i = 0; i < str.length(); i++) {
