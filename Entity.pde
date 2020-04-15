@@ -12,6 +12,7 @@ class Entity {
   boolean onTheGround = false;
   int id = int(random(99))+100*gametick;
   float dynamicDecelR = 0;
+  PImage img;
 
   Entity(float xpos, float ypos, boolean weight) {
     this.x = xpos;
@@ -19,6 +20,7 @@ class Entity {
     this.weight = weight;
   }
   Entity() {
+    img = loadImage("pictures\\GnomeRight.png");
     this.x = width/2-entityWidth/2+400;
     this.y = height/2;
     this.entityWidth = 33;
@@ -49,10 +51,11 @@ class Entity {
 
 
   void render() {
-    fill(COLOR);
-    rect(x, y, this.entityWidth/1, this.entityHeight/1);
-    fill(#00FF00);
-    circle(x, y, 10);
+    //fill(COLOR);
+    //rect(x, y, this.entityWidth/1, this.entityHeight/1);
+    //fill(#00FF00);
+    //circle(x, y, 10);
+    image(img, this.x, this.y-3);
   }
 
   void debug() {

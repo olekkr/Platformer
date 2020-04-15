@@ -8,7 +8,12 @@ float maxSpeedY = 20;
 float decelerationK = 0.98;
 float decelerationK2 = 0.96;
 float staticDecelR = 0;
-int currMap = 0;
+
+String previousMap;
+String currentMap = "2.txt";
+String nextMap;
+String checkPoint;
+
 
 void mousePressed() {
   entities.get(0).debug();
@@ -20,7 +25,6 @@ void setup() {
   entities.add(new Player());
   obstacles = loadMap("2.txt");
   strokeWeight(0);
-  entities.add(new Entity());
 }
 
 void draw() {
@@ -29,7 +33,7 @@ void draw() {
   renderALL();
   entityMove();
   playerAcc();
-  //println("#");
+  text(currentMap, 10, 10);
 }
 
 
@@ -44,7 +48,6 @@ void renderALL() {
 }
 
 void entityMove() { // Moves any Entity
-  //println(entities.get(0).x); // does not work rn for some reason
   for (Entity entity : entities ) {
     entity.move();
     entity.gravMove();
@@ -73,13 +76,20 @@ void keyPressed() {
 }
 
 void moveNextMapEvent() {
-  obstacles = loadMap(++currMap +".txt");
+  currentMap = nextMap;
+  obstacles = loadMap(nextMap);
   entities.get(0).x = entities.get(0).entityWidth;
 }
 void movePrevMapEvent() {
-  obstacles = loadMap(--currMap +".txt");
+  currentMap = nextMap;
+  obstacles = loadMap(previousMap);
   entities.get(0).x = width;
 }
+void deathEvent() {
+  entities.get(0).x = 200;
+  entities.get(0).y = 676;
+}
+
 void keyReleased() {
   setMove(keyCode, false);
 }
@@ -120,19 +130,15 @@ void playerAcc() {
   if (isLeft == true) {
     ((Player) entities.get(0)).speedX = Math.round(((Player) entities.get(0)).speedX - ((Player) entities.get(0)).accMove);
     someSortOfPlayerMovement = true;
-
-    //println(((Player) entities.get(0)).accMove);
   }
   //if d pressed move right
   if (isRight == true) {
     ((Player) entities.get(0)).speedX = Math.round(((Player) entities.get(0)).speedX + ((Player) entities.get(0)).accMove);
     someSortOfPlayerMovement = true;
-    //println(((Player) entities.get(0)).accMove);
   }
 
   if (isUp == true) {
     //((Player) entities.get(0)).jump();
-    //println(((Player) entities.get(0)).accMove);
   }
 
   if (! someSortOfPlayerMovement) {
@@ -215,10 +221,9 @@ ArrayList loadMap(String path) {
   String[] strLines = {};
   ArrayList<Obstacle> obstacles = new ArrayList<Obstacle>();
   Boolean comment;
-  
+
   //interpreter
   for (String str : lines) {
-    
     comment = false;
     String outputStr = "";
     for (int i = 0; i < str.length(); i++) {
@@ -237,7 +242,7 @@ ArrayList loadMap(String path) {
     strLines = append(strLines, outputStr);
   }
   println("done interpeting");
-  
+
   //str => int
   for (String strLine : strLines) {
     String[] numberStr = split(strLine, ',');
@@ -254,17 +259,20 @@ ArrayList loadMap(String path) {
     }
   }
   println("done converting str[] => Obstacle[]");
-  
-  
-  String[] slines = loadStrings("1.txt");
-  String text = join(slines,"\n");
+
+
+  String[] slines = loadStrings(path);
+  String text = join(slines, "\n");
   String[] NextMapRX =     match(text, "^@\\s*NEXTMAP\\s*=\\s*(.{0,4}\\x2Etxt)$");
   String[] PrevMapRX =     match(text, "^@\\s*PREVMAP\\s*=\\s*(.{0,4}\\x2Etxt)$");
   String[] CheckPointRX =  match(text, "^@\\s*CHECKPOINT\\s*=\\s*(.{0,4}\\x2Etxt)$");
-  String[] PlayerModelRX = match(text, "^@\\s*PLAYERMODEL\\s*=\\s*(.{0,18}png)$");
-  String[] BGimageRX =     match(text, "^@\\s*BGIMAGE\\s*=\\s*(.{0,18}\\x2Epng)$");
-  String[] BounceBox =     match(text, "^@\\s*BOUNCBOX\\s*=\\s*(\\d{0,5}),\\s*(\\d{0,5}),\\s*(\\d{0,5}),\\s*(\\d{0,5})\\s{0,2}$");
-  String[] DeathBox =      match(text, "^@\\s*DEATHBOX\\s*=\\s*(\\d{0,5}),\\s*(\\d{0,5}),\\s*(\\d{0,5}),\\s*(\\d{0,5})\\s{0,2}$");
-  printArray(NextMapRX);
+  //String[] PlayerModelRX = match(text, "^@\\s*PLAYERMODEL\\s*=\\s*(.{0,18}png)$");
+  //String[] BGimageRX =     match(text, "^@\\s*BGIMAGE\\s*=\\s*(.{0,18}\\x2Epng)$");
+  //String[] BounceBox =     match(text, "^@\\s*BOUNCBOX\\s*=\\s*(\\d{0,5}),\\s*(\\d{0,5}),\\s*(\\d{0,5}),\\s*(\\d{0,5})\\s{0,2}$");
+  //String[] DeathBox =      match(text, "^@\\s*DEATHBOX\\s*=\\s*(\\d{0,5}),\\s*(\\d{0,5}),\\s*(\\d{0,5}),\\s*(\\d{0,5})\\s{0,2}$");
+  nextMap = NextMapRX[1];
+  previousMap = PrevMapRX[1];
+  checkPoint = CheckPointRX[1];
+  println("mapVarsLoaded");
   return obstacles;
 }

@@ -8,10 +8,11 @@ class Player extends Entity {
   int jumpStatus = 0; // 0:on the ground, 1:after 1 jump, 2:after 2jumps
 
   Player() {
+    img = loadImage("pictures\\GnomeRight.png");
     this.x = 300;
     this.y = height/2 -200;
-    this.entityWidth = 33;
-    this.entityHeight = 64;
+    this.entityWidth = 30;
+    this.entityHeight = 50;
     this.collidable = true;
     this.weight = true;
   }
