@@ -13,6 +13,7 @@ class Entity {
   int id = int(random(99))+100*gametick;
   float dynamicDecelR = 0;
   PImage img;
+  PImage imgL;
 
   Entity(float xpos, float ypos, boolean weight) {
     this.x = xpos;
@@ -21,6 +22,7 @@ class Entity {
   }
   Entity() {
     img = loadImage("pictures\\GnomeRight.png");
+    imgL = loadImage("pictures\\GnomeLeft.png");
     this.x = width/2-entityWidth/2+400;
     this.y = height/2;
     this.entityWidth = 33;
@@ -55,7 +57,12 @@ class Entity {
     //rect(x, y, this.entityWidth/1, this.entityHeight/1);
     //fill(#00FF00);
     //circle(x, y, 10);
-    image(img, this.x, this.y-3);
+    if(this.speedX > 0){    
+      image(img, this.x, this.y-3);    
+    }
+    else{
+      image(imgL, this.x, this.y-3);  
+    }
   }
 
   void debug() {
@@ -90,6 +97,7 @@ class Entity {
 
   void xMove() {
     float specX = this.x + this.speedX;
+    float specY = this.y + this.speedY;
     if (this.collidable) {
       for (Obstacle obstacle : obstacles) {
         if (this.speedX < 0) {
@@ -117,16 +125,11 @@ class Entity {
             specX = obstacle.x - this.entityWidth;
           }
         }
-      }
-      this.x = specX;
-    }
-  }
-
-
-  void yMove() {
-    float specY = this.y + this.speedY;
-    if (this.collidable) {
-      for (Obstacle obstacle : obstacles) {
+       
+        
+        
+        
+        
         if (this.speedY < 0) {
           if (
             testPInBox(this.x, specY, obstacle.x, obstacle.y, obstacle.width_, obstacle.height_) || //if upper xy entity coor is in obstacle
@@ -152,7 +155,18 @@ class Entity {
           }
         }
       }
+      this.x = specX;
       this.y = specY;
+    }
+  }
+
+
+  void yMove() {
+    if (this.collidable) {
+      for (Obstacle obstacle : obstacles) {
+        
+      }
+      
     }
   }
   void landingEvent(Obstacle obstacle) {
