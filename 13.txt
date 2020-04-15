@@ -1,8 +1,8 @@
-comments1234567890AaBbCcDdEeFf only numbers, commas, a-f & A-F are interpetered when uncommented
-coor1, coor2, coor3, coor4, RED, GREEN, BLUE or use hex ff 00 00 00
+"comments1234567890AaBbCcDdEeFf" only numbers"," commas"," "a-f" & "A-F" are interpetered when uncommented
+"coor1, coor2, coor3, coor4, *RED, *GREEN, *BLUE" "or use hex: ff 00 00 00"
 
 @NEXTMAP = 14.txt
-@PREVMAP = 12.txt
+@PREVMAP = 11.txt
 @CHECKPOINT = 2.txt
 @PLAYERMODEL = model.png
 @BGIMAGE = bgimage.png
@@ -14,8 +14,8 @@ coor1, coor2, coor3, coor4, RED, GREEN, BLUE or use hex ff 00 00 00
 0, 740, 5000, 500, #FF784506
 
 
-img 
-sqr 
-decals 
-objct 0 0 10 5 true
+"img 
+"sqr 
+"decals 
+"objct 0 0 10 5 true
 
