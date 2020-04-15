@@ -62,8 +62,9 @@ void keyPressed() {
   // This executes if a key is pressed
   // Part of playerAcc
   // While forcing Playertype makes accMove equal to accMove * accMultiplier and implements MaxMoveMax
-  // entities.get(0) gets entity nummber 0 which is the player .accMove selects the variable accMove which is the accelerated movement (sum of pos, speed, etc.)
-  // This is added to accMultiplier which is the rate at which we go faster (kind of acceletation)
+  // entities.get(0) gets entity number 0 which is the player
+  // .accMove selects the variable accMove which is the accelerated movement (sum of pos, speed, etc.)
+  // This is added to accMultiplier which is the rate at which we go faster (kind of acceleration)
   // If these are under the maximum speed allowed (accMoveMax)
   // Then the movement is set to their value, if not them the movement is set to the maximum value
   // setMove executes the jump function if isUp is true, (if arrowUp or W is pressed)
