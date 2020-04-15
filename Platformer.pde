@@ -59,7 +59,8 @@ void entityMove() { // Moves any Entity
 
 
 void keyPressed() {
-  /// Part of playerAcc
+  // This executes if a key is pressed
+  // Part of playerAcc
   // While forcing Playertype makes accMove equal to accMove * accMultiplier and implements MaxMoveMax
   // entities.get(0) gets entity nummber 0 which is the player .accMove selects the variable accMove which is the accelerated movement (sum of pos, speed, etc.)
   // This is added to accMultiplier which is the rate at which we go faster (kind of acceletation)
