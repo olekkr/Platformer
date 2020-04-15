@@ -16,18 +16,18 @@ String checkPoint;
 
 PImage pic;
 
-void mousePressed() {
-  entities.get(0).debug();
-}
+
 
 void setup() {
   size(1366, 768);
   frameRate(60);
   entities.add(new Player());
-  obstacles = loadMap("2.txt");
+  entities.add(new Coin(width/2, height/2));
   strokeWeight(0);
   pic = loadImage("Background.bmp");
   background(255);
+  obstacles = loadMap(currentMap);
+  
 }
 
 void draw() {
@@ -36,14 +36,15 @@ void draw() {
   renderALL();
   entityMove();
   playerAcc();
+  fill(255);
   text(currentMap, 10, 10);
 }
 
 
 void renderALL() {
   //background
-  
-  
+
+
   for (Obstacle obstacle : obstacles) {
     obstacle.render();
   }
@@ -64,11 +65,10 @@ void entityMove() { // Moves any Entity
   if ( ((Player) entities.get(0)).x < -((Player) entities.get(0)).entityWidth - 3) {
     movePrevMapEvent();
   }
-  if(((Player) entities.get(0)).y > height){
+  if (((Player) entities.get(0)).y > height) {
     deathEvent();
   }
-}
-
+} 
 
 void keyPressed() {
   // This executes if a key is pressed
@@ -80,7 +80,7 @@ void keyPressed() {
   // If these are under the maximum speed allowed (accMoveMax)
   // Then the movement is set to their value, if not them the movement is set to the maximum value
   // setMove executes the jump function if isUp is true, (if arrowUp or W is pressed)
-  
+
   if (abs((((Player) entities.get(0)).accMove + ((Player) entities.get(0)).accMultiplier)) > ((Player) entities.get(0)).accMoveMax) {
     ((Player) entities.get(0)).accMove = ((Player) entities.get(0)).accMoveMax;
   } else {
@@ -105,6 +105,12 @@ void movePrevMapEvent() {
 void deathEvent() {
   entities.get(0).x = 200;
   entities.get(0).y = 676;
+}
+
+void victoryEvent() {
+  PImage fg;
+  fg = loadImage("Pictures\\Victory.bmp");
+  image(fg, 0, 0);
 }
 
 void keyReleased() {
