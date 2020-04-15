@@ -1,6 +1,7 @@
 class Coin extends Entity {
   float turnRate;
   int m_x, m_y;
+  int radius= 50;
 
   Coin(int x, int y) {
     turnRate = 50;
@@ -16,7 +17,12 @@ class Coin extends Entity {
 
   void render() {
     fill(unhex("FFFFEA00"));
-    ellipse(50, 50, 50 * sin(frameCount * PI * 1/turnRate), 50);
+    ellipse(50, 50, radius * sin(frameCount * PI * 1/turnRate), radius);
     
+  }
+  
+  boolean contains(int x, int y){
+   return sqrt(sq(x-this.m_x) + sq(y-this.m_y)) < this.radius;
+   
   }
 }

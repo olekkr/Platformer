@@ -5,8 +5,9 @@ class Player extends Entity {
   float accMultiplier = 0.5; //Acceleration
   float jump1Vel = -20;
   float jump2Vel = -17;
-  int jumpStatus = 0; // 0:on the ground, 1:after 1 jump, 2:after 2jumps
-
+  int jumpStatus = 0; // 0:on the ground, 1:after 1 jump, 2:after 2jumps  
+  int playerPoints = 0;
+  
   Player() {
     img = loadImage("pictures\\GnomeRight.png");
     this.x = 300;

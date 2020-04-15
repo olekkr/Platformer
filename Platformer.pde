@@ -1,5 +1,7 @@
 ArrayList<Entity> entities = new ArrayList<Entity>();
 ArrayList<Obstacle> obstacles = new ArrayList<Obstacle>();
+ArrayList<Coin> coins = new ArrayList<Coin>();
+
 int gametick = 0;
 float gravConstant = 0.60;
 boolean isLeft, isRight, isUp, isDown; 
@@ -22,12 +24,11 @@ void setup() {
   size(1366, 768);
   frameRate(60);
   entities.add(new Player());
-  entities.add(new Coin(width/2, height/2));
+  coins.add(new Coin(width/2, height/2));
   strokeWeight(0);
   pic = loadImage("Background.bmp");
   background(255);
   obstacles = loadMap(currentMap);
-  
 }
 
 void draw() {
@@ -42,9 +43,9 @@ void draw() {
 
 
 void renderALL() {
-  //background
-
-
+  for (Coin coin : coins) {
+    coin.render();
+  }
   for (Obstacle obstacle : obstacles) {
     obstacle.render();
   }
@@ -69,6 +70,15 @@ void entityMove() { // Moves any Entity
     deathEvent();
   }
 } 
+
+void checkCoins(){
+    for(int i = 0; i < coins.size(); i++) {
+    if(coins.get(i).contains(int(entities.get(0).x),int(entities.get(0).y))){
+      coins.remove(i);
+      entities.get(0).playerPoints++;
+    }
+    }
+}
 
 void keyPressed() {
   // This executes if a key is pressed
