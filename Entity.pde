@@ -57,11 +57,10 @@ class Entity {
     //rect(x, y, this.entityWidth/1, this.entityHeight/1);
     //fill(#00FF00);
     //circle(x, y, 10);
-    if(this.speedX > 0){    
-      image(img, this.x, this.y-3);    
-    }
-    else{
-      image(imgL, this.x, this.y-3);  
+    if (this.speedX > 0) {    
+      image(img, this.x, this.y-3);
+    } else {
+      image(imgL, this.x, this.y-3);
     }
   }
 
@@ -75,8 +74,7 @@ class Entity {
 
   void move() {
     gravMove();
-    xMove(); 
-    yMove(); 
+    moveAndCollide(); 
     decelX();
 
     if (this.speedX > maxSpeedX) {
@@ -94,8 +92,11 @@ class Entity {
       this.speedY = -maxSpeedY;
     }
   }
+  
+void landingEvent(Obstacle obstacle) {
+}
 
-  void xMove() {
+  void moveAndCollide() {
     float specX = this.x + this.speedX;
     float specY = this.y + this.speedY;
     if (this.collidable) {
@@ -125,11 +126,7 @@ class Entity {
             specX = obstacle.x - this.entityWidth;
           }
         }
-       
-        
-        
-        
-        
+
         if (this.speedY < 0) {
           if (
             testPInBox(this.x, specY, obstacle.x, obstacle.y, obstacle.width_, obstacle.height_) || //if upper xy entity coor is in obstacle
@@ -158,17 +155,5 @@ class Entity {
       this.x = specX;
       this.y = specY;
     }
-  }
-
-
-  void yMove() {
-    if (this.collidable) {
-      for (Obstacle obstacle : obstacles) {
-        
-      }
-      
-    }
-  }
-  void landingEvent(Obstacle obstacle) {
   }
 }

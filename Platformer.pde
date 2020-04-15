@@ -17,19 +17,19 @@ String checkPoint;
 PImage background;
 PImage bsod;
 
-void mousePressed() {
-  entities.get(0).debug();
-}
+
 
 void setup() {
   size(1366, 768);
   frameRate(60);
   entities.add(new Player());
-  obstacles = loadMap("2.txt");
+  entities.add(new Coin(width/2, height/2));
   strokeWeight(0);
   background = loadImage("Background.bmp");
   bsod = loadImage("GnomeCrash.bmp");
   background(255);
+  obstacles = loadMap(currentMap);
+  
 }
 
 void draw() {
@@ -38,6 +38,7 @@ void draw() {
   renderALL();
   entityMove();
   playerAcc();
+  fill(255);
   text(currentMap, 10, 10);
   if (currentMap == "8.txt"){   
      image (bsod, 0, 0, width, height);
@@ -46,6 +47,10 @@ void draw() {
 
 
 void renderALL() {
+<<<<<<< HEAD
+=======
+  //background
+>>>>>>> 4d78ca8957331eb312a25b117d60948a505d8ee7
 
 
   for (Obstacle obstacle : obstacles) {
@@ -71,7 +76,11 @@ void entityMove() { // Moves any Entity
   if (((Player) entities.get(0)).y > height) {
     deathEvent();
   }
+<<<<<<< HEAD
 }
+=======
+} 
+>>>>>>> 4d78ca8957331eb312a25b117d60948a505d8ee7
 
 void keyPressed() {
   // This executes if a key is pressed
@@ -108,6 +117,12 @@ void movePrevMapEvent() {
 void deathEvent() {
   entities.get(0).x = 200;
   entities.get(0).y = 676;
+}
+
+void victoryEvent() {
+  PImage fg;
+  fg = loadImage("Pictures\\Victory.bmp");
+  image(fg, 0, 0);
 }
 
 void keyReleased() {
