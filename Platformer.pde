@@ -14,6 +14,7 @@ String currentMap = "2.txt";
 String nextMap;
 String checkPoint;
 
+PImage pic;
 
 void mousePressed() {
   entities.get(0).debug();
@@ -25,11 +26,13 @@ void setup() {
   entities.add(new Player());
   obstacles = loadMap("2.txt");
   strokeWeight(0);
+  pic = loadImage("Background.bmp");
+  background(255);
 }
 
 void draw() {
   gametick += 1;
-  background(255);
+  image (pic, 0, 0, width, height);
   renderALL();
   entityMove();
   playerAcc();
@@ -38,6 +41,9 @@ void draw() {
 
 
 void renderALL() {
+  //background
+  
+  
   for (Obstacle obstacle : obstacles) {
     obstacle.render();
   }
