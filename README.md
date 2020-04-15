@@ -1,3 +1,3 @@
 # Platformer
-A platformer
-trello: https://github.com/olekkr/Platformer
+A platformer, why would you ever read the README?
+
