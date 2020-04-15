@@ -14,7 +14,8 @@ String currentMap = "2.txt";
 String nextMap;
 String checkPoint;
 
-PImage pic;
+PImage background;
+PImage bsod;
 
 void mousePressed() {
   entities.get(0).debug();
@@ -26,24 +27,27 @@ void setup() {
   entities.add(new Player());
   obstacles = loadMap("2.txt");
   strokeWeight(0);
-  pic = loadImage("Background.bmp");
+  background = loadImage("Background.bmp");
+  bsod = loadImage("GnomeCrash.bmp");
   background(255);
 }
 
 void draw() {
   gametick += 1;
-  image (pic, 0, 0, width, height);
+  image (background, 0, 0, width, height);
   renderALL();
   entityMove();
   playerAcc();
   text(currentMap, 10, 10);
+  if (currentMap == "8.txt"){   
+     image (bsod, 0, 0, width, height);
+  }
 }
 
 
 void renderALL() {
-  //background
-  
-  
+
+
   for (Obstacle obstacle : obstacles) {
     obstacle.render();
   }
@@ -64,11 +68,10 @@ void entityMove() { // Moves any Entity
   if ( ((Player) entities.get(0)).x < -((Player) entities.get(0)).entityWidth - 3) {
     movePrevMapEvent();
   }
-  if(((Player) entities.get(0)).y > height){
+  if (((Player) entities.get(0)).y > height) {
     deathEvent();
   }
 }
-
 
 void keyPressed() {
   // This executes if a key is pressed
@@ -80,7 +83,7 @@ void keyPressed() {
   // If these are under the maximum speed allowed (accMoveMax)
   // Then the movement is set to their value, if not them the movement is set to the maximum value
   // setMove executes the jump function if isUp is true, (if arrowUp or W is pressed)
-  
+
   if (abs((((Player) entities.get(0)).accMove + ((Player) entities.get(0)).accMultiplier)) > ((Player) entities.get(0)).accMoveMax) {
     ((Player) entities.get(0)).accMove = ((Player) entities.get(0)).accMoveMax;
   } else {
