@@ -16,8 +16,7 @@ String currentMap = "2.txt";
 String nextMap;
 String checkPoint;
 
-PImage backGround;
-PImage bsod;
+PImage pic;
 
 
 
@@ -25,33 +24,31 @@ void setup() {
   size(1366, 768);
   frameRate(60);
   entities.add(new Player());
-  coins.add(new Coin(width/2, height/2));
+  coins.add(new Coin(width/2, height-100));
   strokeWeight(0);
-  backGround = loadImage("Background.bmp");
-  bsod = loadImage("GnomeCrash.bmp");
+  pic = loadImage("Background.bmp");
   background(255);
   obstacles = loadMap(currentMap);
+  
 }
 
 void draw() {
   gametick += 1;
-  image (backGround, 0, 0, width, height);
+  image (pic, 0, 0, width, height);
   renderALL();
   entityMove();
   playerAcc();
+  checkCoins();
   fill(255);
-  text(currentMap, 10, 10);
+  text(currentMap, 10, 12);
+  text("points:  " + ((Player) entities.get(0)).playerPoints, 100, 12);
 }
 
 
 void renderALL() {
-<<<<<<< HEAD
   for (Coin coin : coins) {
     coin.render();
   }
-=======
-
->>>>>>> 70771510ab238a2767e7bb0f23fb900b4d8a8469
   for (Obstacle obstacle : obstacles) {
     obstacle.render();
   }
@@ -75,17 +72,16 @@ void entityMove() { // Moves any Entity
   if (((Player) entities.get(0)).y > height) {
     deathEvent();
   }
+} 
 
-}
-
-
-void checkCoins(){
-    for(int i = 0; i < coins.size(); i++) {
-    if(coins.get(i).contains(int(entities.get(0).x),int(entities.get(0).y))){
+void checkCoins() {
+  for (int i = 0; i < coins.size(); i++) {
+    if (coins.get(i).contains(int(entities.get(0).x), int(entities.get(0).y))) {
       coins.remove(i);
-      entities.get(0).playerPoints++;
+      ((Player) entities.get(0)).playerPoints ++;
+      println("hello");
     }
-    }
+  }
 }
 
 void keyPressed() {
@@ -114,11 +110,6 @@ void moveNextMapEvent() {
   currentMap = nextMap;
   obstacles = loadMap(nextMap);
   entities.get(0).x = entities.get(0).entityWidth;
-  //why does this stupid if stamement not work .....
-  if (currentMap == "8.txt"){
-     println("8");
-     backGround = bsod;
-  }
 }
 void movePrevMapEvent() {
   currentMap = nextMap;

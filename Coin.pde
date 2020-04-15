@@ -17,7 +17,7 @@ class Coin extends Entity {
 
   void render() {
     fill(unhex("FFFFEA00"));
-    ellipse(50, 50, radius * sin(frameCount * PI * 1/turnRate), radius);
+    ellipse(m_x, m_y, radius * sin(frameCount * PI * 1/turnRate), radius);
     
   }
   
