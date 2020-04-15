@@ -8,7 +8,7 @@ float maxSpeedY = 20;
 float decelerationK = 0.98;
 float decelerationK2 = 0.96;
 float staticDecelR = 0;
-int currMap = 2;
+int currMap = 0;
 
 void mousePressed() {
   entities.get(0).debug();
@@ -215,14 +215,10 @@ ArrayList loadMap(String path) {
   String[] strLines = {};
   ArrayList<Obstacle> obstacles = new ArrayList<Obstacle>();
   Boolean comment;
-
+  
   //interpreter
   for (String str : lines) {
-    String[] NextMapRX = match(str, "@NEXTMAP \\s* = \\s* (\\d)");
-    if (str.toCharArray()[0] == '@') {
-      
-      break;
-    }
+    
     comment = false;
     String outputStr = "";
     for (int i = 0; i < str.length(); i++) {
@@ -241,7 +237,7 @@ ArrayList loadMap(String path) {
     strLines = append(strLines, outputStr);
   }
   println("done interpeting");
-
+  
   //str => int
   for (String strLine : strLines) {
     String[] numberStr = split(strLine, ',');
@@ -258,6 +254,17 @@ ArrayList loadMap(String path) {
     }
   }
   println("done converting str[] => Obstacle[]");
-
+  
+  
+  String[] slines = loadStrings("1.txt");
+  String text = join(slines,"\n");
+  String[] NextMapRX =     match(text, "^@\\s*NEXTMAP\\s*=\\s*(.{0,4}\\x2Etxt)$");
+  String[] PrevMapRX =     match(text, "^@\\s*PREVMAP\\s*=\\s*(.{0,4}\\x2Etxt)$");
+  String[] CheckPointRX =  match(text, "^@\\s*CHECKPOINT\\s*=\\s*(.{0,4}\\x2Etxt)$");
+  String[] PlayerModelRX = match(text, "^@\\s*PLAYERMODEL\\s*=\\s*(.{0,18}png)$");
+  String[] BGimageRX =     match(text, "^@\\s*BGIMAGE\\s*=\\s*(.{0,18}\\x2Epng)$");
+  String[] BounceBox =     match(text, "^@\\s*BOUNCBOX\\s*=\\s*(\\d{0,5}),\\s*(\\d{0,5}),\\s*(\\d{0,5}),\\s*(\\d{0,5})\\s{0,2}$");
+  String[] DeathBox =      match(text, "^@\\s*DEATHBOX\\s*=\\s*(\\d{0,5}),\\s*(\\d{0,5}),\\s*(\\d{0,5}),\\s*(\\d{0,5})\\s{0,2}$");
+  printArray(NextMapRX);
   return obstacles;
 }
