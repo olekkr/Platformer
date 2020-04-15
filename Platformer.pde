@@ -40,6 +40,7 @@ void draw() {
   playerAcc();
   fill(255);
   text(currentMap, 10, 10);
+  println(currentMap);
 }
 
 
