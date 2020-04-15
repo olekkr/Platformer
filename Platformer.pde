@@ -16,7 +16,8 @@ String currentMap = "2.txt";
 String nextMap;
 String checkPoint;
 
-PImage pic;
+PImage backGround;
+PImage bsod;
 
 
 
@@ -26,14 +27,15 @@ void setup() {
   entities.add(new Player());
   coins.add(new Coin(width/2, height/2));
   strokeWeight(0);
-  pic = loadImage("Background.bmp");
+  backGround = loadImage("Background.bmp");
+  bsod = loadImage("GnomeCrash.bmp");
   background(255);
   obstacles = loadMap(currentMap);
 }
 
 void draw() {
   gametick += 1;
-  image (pic, 0, 0, width, height);
+  image (backGround, 0, 0, width, height);
   renderALL();
   entityMove();
   playerAcc();
@@ -43,9 +45,13 @@ void draw() {
 
 
 void renderALL() {
+<<<<<<< HEAD
   for (Coin coin : coins) {
     coin.render();
   }
+=======
+
+>>>>>>> 70771510ab238a2767e7bb0f23fb900b4d8a8469
   for (Obstacle obstacle : obstacles) {
     obstacle.render();
   }
@@ -69,7 +75,9 @@ void entityMove() { // Moves any Entity
   if (((Player) entities.get(0)).y > height) {
     deathEvent();
   }
-} 
+
+}
+
 
 void checkCoins(){
     for(int i = 0; i < coins.size(); i++) {
@@ -106,6 +114,11 @@ void moveNextMapEvent() {
   currentMap = nextMap;
   obstacles = loadMap(nextMap);
   entities.get(0).x = entities.get(0).entityWidth;
+  //why does this stupid if stamement not work .....
+  if (currentMap == "8.txt"){
+     println("8");
+     backGround = bsod;
+  }
 }
 void movePrevMapEvent() {
   currentMap = nextMap;
