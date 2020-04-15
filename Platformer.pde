@@ -64,6 +64,9 @@ void entityMove() { // Moves any Entity
   if ( ((Player) entities.get(0)).x < -((Player) entities.get(0)).entityWidth - 3) {
     movePrevMapEvent();
   }
+  if(((Player) entities.get(0)).y > height){
+    deathEvent();
+  }
 }
 
 
